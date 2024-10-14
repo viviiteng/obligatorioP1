@@ -29,34 +29,176 @@
         </header>
         <!-- FIN CABEZAL -->
         <main>
+          
+          <!-- REGISTRO -->
           <section>
-            <!-- TITULOS -->
-            <h1>Titulo 1</h1>
-            <h2>Titulo 2</h2>
-            <h3>Titulo 3</h3>
-            <h4>Titulo 4</h4>
-            <hr>
-            <!-- INPUTS -->
-            <h3>Inputs</h3>
-            <label for="txtTexto">txtTexto</label>
-            <input type="text" id="txtTexto" />
-            <label for="nbrNumero">nbrNumero</label>
-            <input type="number" id="nbrNumero" />
-            <label for="txtPass">txtPass</label>
+            <h2>Registro de usuario</h2>
+           <form>
+            <label for="txtNombre">Nombre:</label>
+            <input type="text" id="txtNombre" />
+
+            <label for="txtApellido">Apellido:</label>
+            <input type="text" id="txtApellido" />
+            
+            <label for="txtUsuario">Usuario:</label>
+            <input type="text" id="txtUsuario" />
+
+            <label for="txtPass">Contraseña:</label>
             <input type="password" id="txtPass" />
-            <label for="txtComentarios">Text Area</label>
-            <textarea id="txtComentarios"></textarea>
-            <label for="slcOpciones">Select</label>
-            <select id="slcOpciones">
-              <option value="1">opcion 1</option>
-              <option value="2">opcion 2</option>
-              <option value="3">opcion 3</option>
-            </select>
-            <input type="button" value="Enviar" /><br />
+
+            <label for="txtPass2">Confirma contraseña:</label>
+            <input type="password" id="txtPass2" />
+
+            <label for="nmbCard">Numero de tarjeta:</label>
+            <input type="number" id="nmbCard" placeholder="WWWW-XXXX-YYYY-ZZZZ" />
+
+            <label for="nmbCVC">CVC (3 dígitos numérico):</label>
+            <input type="number" id="nmbCVC" />
+
+            <input type="button" value="Registrar" /><br />
+           </form>
             <hr />
       
+          <!-- Inicio de Sesion -->
           </section>
-      
+          <h2>Iniciar Sesión</h2>
+          <form>
+            <label for="slcTipoUsuario">Tipo de usuario:</label>
+            <select id="slcTipoUsuario">
+              <option value="-1">Seleccione una opción... </option>
+              <option value="cliente">Cliente</option>
+              <option value="admin">Administrador</option>
+            </select>
+            <label for="txtUsuarioSesion">Usuario:</label>
+            <input type="text" id="txtUsuarioSesion" />
+
+            <label for="txtPassSesion">Contraseña:</label>
+            <input type="password" id="txtPassSesion" />
+            <input type="button" value="Iniciar Sesión" id="btnIniciarSesion">
+            <hr>
+          </form>
+          
+
+          <!-- ADMINISTRAR DESTINOS -->
+          <section>
+            <h2>ADMINISTRAR DESTINOS</h2>
+            <input type="button" value="Agregar destino">
+            <table>
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Precio</th>
+                  <th>Imagen</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    Destino 1
+                  </td>
+                  <td>$$$</td>
+                  <td><img src="https://place-hold.it/100x100/aaa/imagen.jpg" alt="prueba"></td>
+                  <td>
+                    <input type="button" value="Editar" />
+                    <input type="button" value="Eliminar" />
+                    <select id="slcEstado">
+                      <option value="activar">Activado</option>
+                      <option value="pausar">Pausado</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Destino 2
+                  </td>
+                  <td>$$$</td>
+                  <td><img src="https://place-hold.it/100x100/aaa/imagen.jpg" alt="prueba"></td>
+                  <td>
+                    <input type="button" value="Editar" />
+                    <input type="button" value="Eliminar" />
+                    <select id="slcEstado">
+                      <option value="activar">Activado</option>
+                      <option value="pausar">Pausado</option>
+                    </select>
+                  </td>
+                </tr>
+        
+              </tbody>
+            </table>  
+          </section>
+          
+           <!-- AGREGAR DESTINOS -->
+          <section>
+          
+                <h2>Agregar destinos</h2>
+                <form>
+                  <label for="txtDestino">Nombre del destino:</label>
+                  <input type="text" id="txtDestino"/>
+                  
+                  <label for="nmbPrecio">Precio:</label>
+                  <input type="number" id="nmbPrecio">
+                  <div id="flexBox">
+                    <label for="cbOferta">Seleccionar en caso de oferta</label>
+                    <input type="checkbox" id="cbOferta">
+                  </div>
+  
+                  <label for="nmbDescuento">Descuento (%)</label>
+                  <input type="number" id="nmbDescuento" disabled>
+  
+                  <label for="nmbAgregarCupos">Ingresar cantidad de cupos disponibles:</label>
+                  <input type="number" id="nmbAgregarCupos">
+  
+                  <label for="txtDescripcion">Descripcion</label>
+                  <textarea id="txtDestino"></textarea>
+  
+  
+  
+                  <label for="subirIMG">Subir imagen:</label>
+                  <input type="file" id="subirIMG" accept="image/*">
+                  <input type="button" value="Agregar" id="btnAgregarDestino">
+                </form>
+                <hr>
+            </section>
+            <!-- Editar Destinos -->
+            <section>
+              <h2>Editar destinos</h2>
+                <form>
+                  <label for="txtDestino">Nombre del destino:</label>
+                  <input type="text" id="txtDestino"/>
+                  
+                  <label for="nmbPrecio">Precio:</label>
+                  <input type="number" id="nmbPrecio">
+                  <div id="flexBox">
+                    <label for="cbOferta">Seleccionar en caso de oferta</label>
+                    <input type="checkbox" id="cbOferta">
+                  </div>
+  
+                  <label for="nmbDescuento">Descuento (%)</label>
+                  <input type="number" id="nmbDescuento" disabled>
+  
+                  <label for="nmbAgregarCupos">Ingresar cantidad de cupos disponibles:</label>
+                  <input type="number" id="nmbAgregarCupos">
+  
+                  <label for="txtDescripcion">Descripcion</label>
+                  <textarea id="txtDestino"></textarea>
+  
+  
+  
+                  <label for="subirIMG">Subir imagen:</label>
+                  <input type="file" id="subirIMG" accept="image/*">
+                  <input type="button" value="Editar" id="btnAgregarDestino">
+                </form>
+                <hr>
+              
+            </section>
+          <!-- TITULOS -->
+          <h1>Titulo 1</h1>
+          <h2>Titulo 2</h2>
+          <h3>Titulo 3</h3>
+          <h4>Titulo 4</h4>
+          <hr>
+          <!-- INPUTS -->
           <!-- TABLA -->
           <h3>Resumen</h3>
           <table>
