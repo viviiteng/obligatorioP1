@@ -43,14 +43,14 @@ h4 {
 }
 
 /* Estilos nav */
-#navPrincipal {
+nav {
   float: right;
   margin-top: 5px;
   margin-right: 10px;
   max-width: 700px;
 }
 
-#navPrincipal li {
+nav li {
   list-style-type: none;
   padding: 10px;
   margin: 5px;
@@ -63,14 +63,14 @@ header img {
   border:1px solid #888;
 }
 
-#navPrincipal a {
+nav a {
   cursor: pointer;
   color: #fafafa;
   font-size: 14px;
   font-weight: 600;
 }
 
-#navPrincipal a:hover {
+nav a:hover {
   color: #c0ca33;
 }
 

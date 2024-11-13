@@ -6,15 +6,16 @@ class Sistema {
     }
 
     precargarDatos(){
-        const admin1= new Usuario(("Agustin", "321", "administrador", null, null, null, null, null));
-        
-        this.usuarios.push(admin1)
+        const admin1= new Usuario("Agustin", "Agu123", "administrador", null, null, null, null, null);
+        const admin2= new Usuario("Viviana", "Vivi123", "administrador", null, null, null, null, null);
+        const cliente1= new Usuario("Juan12", "Ju1234", "cliente", "Juan", "Gonzalez", "12345", 5223450370829605, 123);
+        this.usuarios.push(admin1,admin2,cliente1)
 
-        console.log("precarga", this.usuarios)
+        const destino1= new Destinos()
+        const destino2= new Destinos()
+        const destino3= new Destinos()
+        this.destinos.push(destino1,destino2,destino3)
     }
 
     
 }
-
-// const admin2= new Usuario(("Viviana", "123", "administrador", null, null, null, null, null));
-//         const cliente1= new Usuario(("Juan12", "12345", "cliente", "Juan", "Gonzalez", "12345", 5223450370829605, 52));

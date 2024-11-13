@@ -15,18 +15,33 @@
       <img id="logo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBRWovuUPFEU2kx5mlt5sjfigAccmFr8Jq8w&s"
         alt="logo" />
       <nav>
-        <ul id="navPrincipal">
+        <ul id="ulAdmin">
           <li>
-            <a>Sección 1</a>
+            <a href="" id="">Listado Reservas</a>
           </li>
           <li>
-            <a>Sección 2</a>
+            <a href="" id="">Aministrar Destinos</a>
           </li>
           <li>
-            <a>Sección 3</a>
+            <a href="" id="">Estadisticas</a>
           </li>
           <li>
-            <a>Sección 4</a>
+            <a href="" id="">Cerrar sesion</a>
+          </li>
+        </ul>
+
+        <ul id="ulCliente">
+          <li>
+            <a href="" id="">Listado Reservas</a>
+          </li>
+          <li>
+            <a>Explorar Destinos</a>
+          </li>
+          <li>
+            <a>Ofertas</a>
+          </li>
+          <li>
+            <a href="" id="">Cerrar sesion</a>
           </li>
         </ul>
       </nav>
@@ -44,8 +59,10 @@
           <label for="txtPasswordSesion">Contraseña:</label>
           <input type="password" id="txtPasswordSesion" />
           <input type="button" value="Iniciar Sesión" id="btnIniciarSesion">
-          <hr>
+          <a href="#seccionRegistro" class="boton" id="btnSeccionRegistro">Quiero registrarme</a>
+          
         </form>
+        <p id="pMensajeIniciarSesion"></p>
       </section>
 
       <!-- 1 REGISTRO -->
@@ -73,10 +90,11 @@
           <label for="nmbCvcIngresado">CVC (3 dígitos numérico):</label>
           <input type="number" id="nmbCvcIngresado" />
 
-          <input type="button" value="Registrar" id="btnRegistrarNuevoUsuario"/>
+          <input type="button" value="Registrar" class="boton" id="btnRegistrarNuevoUsuario"/>
           
         </form>
-        <hr />
+        <p id="pMensajeRegistro"></p>
+      
       </section>
 
 
@@ -85,8 +103,8 @@
       <section class="seccionGeneral" id="seccionAdministrarDestinos">
         <h2>ADMINISTRAR DESTINOS</h2>
         <h2>EXPLORAR DESTINOS</h2>
-        <input type="button" value="Agregar destino">
-        <input type="button" value="Ver ofertas">
+        <input type="button" value="Agregar destino" class="boton botonAdmin">
+        <input type="button" value="Ver ofertas" class="boton botonCliente">
         <table>
           <thead>
             <tr>
@@ -96,38 +114,24 @@
               <th></th>
             </tr>
           </thead>
-          <tr>
-            <td>
-              Destino 1
-            </td>
-            <td>$$$</td>
-            <td><img src="https://place-hold.it/100x100/aaa/imagen.jpg" alt="prueba"></td>
-            <td>
-              <input type="button" value="Reservar" />
-              <input type="button" value="Editar" />
-              <input type="button" value="Eliminar" />
-              <select id="slcEstadoExplorar">
-                <option value="activar">Activado</option>
-                <option value="pausar">Pausado</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              Destino 2
-            </td>
-            <td>$$$</td>
-            <td><img src="https://place-hold.it/100x100/aaa/imagen.jpg" alt="prueba"></td>
-            <td>
-              <input type="button" value="Reservar" />
-              <input type="button" value="Editar" />
-              <input type="button" value="Eliminar" />
-              <select id="slcEstadoExplorar2">
-                <option value="activar">Activado</option>
-                <option value="pausar">Pausado</option>
-              </select>
-            </td>
-          </tr>
+          <tbody>
+            <tr>
+              <td>
+                Destino 1
+              </td>
+              <td>$$$</td>
+              <td><img src="https://place-hold.it/100x100/aaa/imagen.jpg" alt="prueba"></td>
+              <td>
+                <input type="button" value="Reservar" />
+                <input type="button" value="Editar" class="boton botonAdmin" />
+                <input type="button" value="Eliminar" class="boton botonAdmin"/>
+                <select id="slcEstadoExplorar" class="boton botonAdmin">
+                  <option value="activar">Activado</option>
+                  <option value="pausar">Pausado</option>
+                </select>
+              </td>
+            </tr>
+          </tbody>
         </table>
       </section>
 
@@ -160,11 +164,11 @@
           <input type="button" value="Agregar" id="btnAgregarDestino">
           <input type="button" value="Editar" id="btnEditarDestino">
         </form>
-        <hr>
+        
       </section>
 
       
-      <hr />
+    
       
       <!-- 4 VER OFERTAS -->
       <section class="seccionCliente" id="seccionOfertas">
@@ -199,7 +203,7 @@
           </table>
       </section>
       
-      <hr>
+      
       <!-- 5 REALIZAR RESERVA -->
       <section class="seccionCliente" id="seccionRealizarReservas">
         <h2>REALIZAR RESERVA</h2>
@@ -218,7 +222,7 @@
         </form>
         <p>Millas disponibles: 1000</p>
       </section>
-      <hr>
+      
       
       <!-- 6 VER LISTADO DE RESERVAS Y CANCELAR -->
       <section class="seccionCliente" id="seccionListadoDeReservas">

@@ -206,12 +206,36 @@ function validarNumerico(numero){
     return !isNaN(Number(numero))
 }
 
+
+
 function validarRegistroDeUsuario (nombre, apellido, usuario, contraseña1, contraseña2, tarjetaIngresada, cvc){
-   
-        return  validarNumerico(tarjetaIngresada) && validarNumerico(cvc) && nombre!=="" && usuario!=="" && apellido!=="" && contraseña1!=="" && contraseña1===contraseña2 && tarjetaIngresada.length === 16 && cvc.length === 3
-}   
+    
+    let contadorMayus = 0
+    let contadorMinus = 0
+    let contadorNumero= 0
+    
+        
+    for(let i=0;i<contraseña1.length;i++){
+        
+        if(contraseña1.charCodeAt(i)>64 && contraseña1.charCodeAt(i)<91){
+           contadorMayus++
+        }else if(contraseña1.charCodeAt(i)>96 && contraseña1.charCodeAt(i)<123){
+           contadorMinus++
+        }else if(contraseña1.charCodeAt(i)>47 && contraseña1.charCodeAt(i)<58){
+            contadorNumero++
+        }
+    }
+    console.log("Mas de 5 Caracteres",contraseña1.length>=5)
+    console.log("1 mayus",contadorMayus>0)
+    console.log("1 minus",contadorMinus>0)
+    console.log("1 num",contadorNumero>0)
+    
+    return contraseña1.length>=5 && contadorMayus>0 && contadorMinus>0 && contadorNumero>0 && validarNumerico(tarjetaIngresada) && validarNumerico(cvc) && nombre!=="" && usuario!=="" && apellido!=="" && contraseña1!==""  && contraseña1===contraseña2 && tarjetaIngresada.length === 16 && cvc.length === 3
+}
+
 
  
+
 
 
 
