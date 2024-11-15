@@ -1,5 +1,6 @@
 class Usuario {
-    constructor(usuario, password, tipoUsuario, nombre, apellido, confirmaContraseña, numeroTarjeta,cvc) {
+    constructor(id,usuario, password, tipoUsuario, nombre, apellido, confirmaContraseña, numeroTarjeta,cvc) {
+        this.id=id
         this.usuario=usuario;
         this.password=password;
         this.tipoUsuario=tipoUsuario;

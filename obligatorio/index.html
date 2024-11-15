@@ -13,7 +13,8 @@
     <!-- NAV -->
     <header>
       <img id="logo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBRWovuUPFEU2kx5mlt5sjfigAccmFr8Jq8w&s"
-        alt="logo" />
+          alt="logo" />
+      
       <nav>
         <ul id="ulAdmin">
           <li>
@@ -35,10 +36,9 @@
             <a href="" id="">Listado Reservas</a>
           </li>
           <li>
-            <a>Explorar Destinos</a>
-          </li>
+            <a href="" id=""> Explorar Destinos</a>
           <li>
-            <a>Ofertas</a>
+            <a href="" id="">Ofertas</a>
           </li>
           <li>
             <a href="" id="">Cerrar sesion</a>
@@ -101,21 +101,22 @@
 
       <!-- 3 ADMINISTRAR DESTINOS -->
       <section class="seccionGeneral" id="seccionAdministrarDestinos">
-        <h2>ADMINISTRAR DESTINOS</h2>
-        <h2>EXPLORAR DESTINOS</h2>
-        <input type="button" value="Agregar destino" class="boton botonAdmin">
-        <input type="button" value="Ver ofertas" class="boton botonCliente">
+        <h2 class="admin">ADMINISTRAR DESTINOS</h2>
+        <h2 class="cliente">EXPLORAR DESTINOS</h2>
+        <input type="button" value="Agregar destino" class="boton admin" id="btnSeccionAgregarDestinos">
+        <input type="button" value="Ver ofertas" class="boton cliente">
         <table>
           <thead>
             <tr>
               <th>Nombre</th>
               <th>Precio</th>
               <th>Imagen</th>
+              <th>Descripcion</th>
               <th></th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
+          <tbody id="tbDestinos">
+            <!-- <tr>
               <td>
                 Destino 1
               </td>
@@ -130,42 +131,77 @@
                   <option value="pausar">Pausado</option>
                 </select>
               </td>
-            </tr>
+            </tr> -->
           </tbody>
         </table>
       </section>
 
-      <!-- 3 AGREGAR Y EDITAR DESTINOS -->
-      <section class="seccionAdmin" id="seccionAgregarEditarDestinos">
+      <!-- 3 AGREGAR DESTINOS -->
+      <section class="" id="seccionAgregarDestinos">
 
         <h2>Agregar destinos</h2>
         <form>
-          <label for="txtDestino">Nombre del destino:</label>
-          <input type="text" id="txtDestino" />
+          <label for="txtDestinoA">Nombre del destino:</label>
+          <input type="text" id="txtDestinoA" />
 
-          <label for="nmbPrecio">Precio:</label>
-          <input type="number" id="nmbPrecio">
-          <div id="flexBox">
-            <label for="cbOferta">Seleccionar en caso de oferta</label>
-            <input type="checkbox" id="cbOferta">
+          <label for="nmbPrecioA">Precio:</label>
+          <input type="number" id="nmbPrecioA">
+          <div id="flexBoxA">
+            <label for="cbOfertaA">Seleccionar en caso de oferta</label>
+            <input type="checkbox" id="cbOfertaA">
           </div>
 
-          <label for="nmbDescuento">Descuento (%)</label>
-          <input type="number" id="nmbDescuento" disabled>
+          <label for="nmbDescuentoA">Descuento (%)</label>
+          <input type="number" id="nmbDescuentoA">
 
-          <label for="nmbAgregarCupos">Ingresar cantidad de cupos disponibles:</label>
-          <input type="number" id="nmbAgregarCupos">
+          <label for="nmbAgregarCuposA">Ingresar cantidad de cupos disponibles:</label>
+          <input type="number" id="nmbAgregarCuposA">
 
-          <label for="txtDescripcion">Descripcion</label>
-          <textarea id="txtDescripcion"></textarea>
+          <label for="txtDescripcionA">Descripcion</label>
+          <textarea id="txtDescripcionA"></textarea>
 
-          <label for="subirIMG">Subir imagen:</label>
-          <input type="file" id="subirIMG" accept="image/*">
-          <input type="button" value="Agregar" id="btnAgregarDestino">
-          <input type="button" value="Editar" id="btnEditarDestino">
+          <label for="txtSubirIMGA">Subir imagen:</label>
+          <input type="text" id="txtSubirIMGA">
+          <input type="button" value="Agregar" id="btnAgregarDestinoConfirmar">
         </form>
         
       </section>
+
+      <!-- 3 EDITAR DESTINOS -->
+
+      <section class="seccionAdmin" id="seccionEditarDestinos">
+
+        <h2>Editar destinos</h2>
+        <form>
+          <label for="txtDestinoE">Nombre del destino:</label>
+          <input type="text" id="txtDestinoE" />
+
+          <label for="nmbPrecioE">Precio:</label>
+          <input type="number" id="nmbPrecioE">
+          
+          <div id="flexBoxE">
+            <label for="cbOfertaE">Seleccionar en caso de oferta</label>
+            <input type="checkbox" id="cbOfertaE">
+          </div>
+
+          <label for="nmbDescuentoE">Descuento (%)</label>
+          <input type="number" id="nmbDescuentoE" disabled>
+
+          <label for="nmbAgregarCuposE">Ingresar cantidad de cupos disponibles:</label>
+          <input type="number" id="nmbAgregarCuposE">
+
+          <label for="txtDescripcionE">Descripcion</label>
+          <textarea id="txtDescripcionE"></textarea>
+
+          <label for="txtSubirIMGE">Subir imagen:</label>
+          <input type="text" id="txtSubirIMGE">
+          <input type="button" value="Editar" id="btnEditarDestinoConfirmar">
+        </form>
+        
+      </section>
+
+
+
 
       
     

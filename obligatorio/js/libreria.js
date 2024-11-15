@@ -230,7 +230,13 @@ function validarRegistroDeUsuario (nombre, apellido, usuario, contraseña1, cont
     console.log("1 minus",contadorMinus>0)
     console.log("1 num",contadorNumero>0)
     
-    return contraseña1.length>=5 && contadorMayus>0 && contadorMinus>0 && contadorNumero>0 && validarNumerico(tarjetaIngresada) && validarNumerico(cvc) && nombre!=="" && usuario!=="" && apellido!=="" && contraseña1!==""  && contraseña1===contraseña2 && tarjetaIngresada.length === 16 && cvc.length === 3
+
+    return contraseña1.length>=5 && contadorMayus>0 && contadorMinus>0 && contadorNumero>0 && validarNumerico(tarjetaIngresada) && validarNumerico(cvc) && 
+    nombre!=="" && usuario!=="" && apellido!=="" && contraseña1===contraseña2 && tarjetaIngresada.length === 16 && cvc.length === 3
+}
+
+function validarNuevoDestino(destino,precio,descuento,cupos,descripcion,img){
+    return destino!=="" && descripcion!=="" && validarNumerico(precio) && img!=="" && validarNumerico(descuento) && validarNumerico(cupos)
 }
 
 
