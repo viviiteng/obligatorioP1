@@ -236,8 +236,10 @@ function agregarNuevoDestino() {
         
     if (validarNuevoDestino(destinoIngresado,precio,descuento,cantidadCupos,descripcion,img)) {
         sistema.cargarDestino(destinoIngresado,precio,img,"pausado",cantidadCupos,descripcion,esOferta)
-        inicioSegunTipoUsuario(tipoUsuario)
+        inicioSegunTipoUsuario(sistema.usuarioLogueado.tipoUsuario)
         
+    }else{
+        document.querySelector("#pErrorSeccionAgregar").innerHTML="Todos los espacios deben ser ingresados y los valores numericos deben ser mayor a 0"
     }
 
 }
@@ -268,7 +270,10 @@ function editarDestino() {
     let cantidadCupos = document.querySelector("#nmbAgregarCuposE").value
     let descripcion = document.querySelector("#txtDescripcionE").value
     let img = document.querySelector("#txtSubirIMGE").value
-        
+  
+//Raro este if, habria que usar otra funcion para validar, ya que no es obligatorio q el  administrador
+//ingrese cada input, sino los que quiere. att>Vivi
+
     if (validarNuevoDestino(destinoIngresado,precio,descuento,cantidadCupos,descripcion,img)) {
         for (let i = 0; i < sistema.destinos.length; i++) {
             let destino= sistema.destinos[i]
@@ -281,7 +286,7 @@ function editarDestino() {
                 destino.esOferta=esOferta
             }   
         }
-    inicioSegunTipoUsuario(tipoUsuario)
+    inicioSegunTipoUsuario(sistema.usuarioLogueado.tipoUsuario)
        
     }
     console.log("destinoespecifico",sistema.destinoEspecifico)

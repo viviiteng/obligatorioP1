@@ -236,7 +236,7 @@ function validarRegistroDeUsuario (nombre, apellido, usuario, contraseña1, cont
 }
 
 function validarNuevoDestino(destino,precio,descuento,cupos,descripcion,img){
-    return destino!=="" && descripcion!=="" && validarNumerico(precio) && img!=="" && validarNumerico(descuento) && validarNumerico(cupos)
+    return destino!=="" && descripcion!=="" && validarNumerico(precio) && img!=="" && validarNumerico(descuento) && validarNumerico(cupos) && precio>=0 && descuento>=0 && cupos>=0;
 }
 
 
