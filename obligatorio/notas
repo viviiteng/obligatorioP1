@@ -1,7 +1,4 @@
-- Modificar registro agregando id autogenerado
-- agregar descripcion en tabla y en sistem
-- agregar descripcion de destinos en la precarga
+
 - lo que queremos hacer en SeccionEditar (autorelleno)
 - modificar las clases de los botones
-- Parametron en sistema de Ultipo Usuario Logueado
 - traer validacion de tarjeta

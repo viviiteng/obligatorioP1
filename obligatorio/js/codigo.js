@@ -1,6 +1,7 @@
 const sistema = new Sistema();
 sistema.precargarDatos();
-//OCULTAR TODAS LAS PESTANAS
+//FUNCION OCULTAR PESTANAS
+
 function ocultarSecciones() {
     let secciones = document.getElementsByTagName("section")
     for (let i = 0; i < secciones.length; i++) {
@@ -21,12 +22,12 @@ function ocultarElementosSegunClase(claseOcultada,claseMostrada) {
 }
 
 
-function ocultarBarraSegunTipoUsuario(esCliente){
+function ocultarBarraSegunTipoUsuario(tipoUsuario){
     let uls = document.getElementsByTagName("ul")
-    if(esCliente===true){
+    if(tipoUsuario==="cliente"){
         uls[1].style.display = "block"
         uls[0].style.display = "none"
-    }else if(esCliente===false){
+    }else if(tipoUsuario==="admin"){
         uls[0].style.display = "block"
         uls[1].style.display = "none"
     }else{
@@ -37,7 +38,7 @@ function ocultarBarraSegunTipoUsuario(esCliente){
 }
 
 
-
+//FUNCION Mostrar
 function mostrarSeccionInicioSesion() {
     ocultarSecciones()
     ocultarBarraSegunTipoUsuario()
@@ -61,15 +62,12 @@ function mostrarSeccionSegunId() {
         console.log("idExtraidoHTML",idExtraidoHTML)
         console.log("idSeccion",idSeccion)
         console.log("coinciden",idExtraidoHTML === idSeccion)
-
     }
-
 }
 
 let botones = document.querySelectorAll(".boton")
 for (let i = 0; i < botones.length; i++) {
-    botones[i].addEventListener("click", mostrarSeccionSegunId)
-    
+    botones[i].addEventListener("click", mostrarSeccionSegunId)    
 }
 
 function mostrarSeccionSegunData() {
@@ -77,19 +75,24 @@ function mostrarSeccionSegunData() {
     let idBtn = this.getAttribute("data-btnTabla")
     let idSeccion = idBtn.charAt(3).toLowerCase() + idBtn.substring(4,idBtn.indexOf("-"))    
     let secciones = document.getElementsByTagName("section")
+
+    sistema.buscarDestinoPorID(idBtn.substring(idBtn.indexOf("-")+1))
     for (let i = 0; i < secciones.length; i++) {
         let idExtraidoHTML = secciones[i].getAttribute("id")
         
         if ( idExtraidoHTML === idSeccion) {
             ocultarSecciones()
             document.querySelector("#"+idSeccion).style.display = "block"
+            if (idSeccion === "seccionEditarDestino") {
+                cargarDatosExistentesDestinos();
+            }   
         }
         console.log("idExtraidoHTMLDATA",idExtraidoHTML)
         console.log("idSeccionDATA",idSeccion)
         console.log("coincidenDATA",idExtraidoHTML === idSeccion)
-
     }
-
+    console.log("************************")
+    // console.log("prueba", idBtn.substring(idBtn.indexOf("-")+1))
 }
 
 
@@ -124,26 +127,23 @@ function registrarNuevoUsuario() {
     if (validacionFormato) {
 
         if (usuarioEncontrado) {
-            let nuevoUsuario = new Usuario(usuarioIngresado, passwordIngresada, "cliente", nombreIngresado, apellidoIngresado, passwordIngresadaConfirmacion, tarjetaIngresada, cvcIngresado)
-            sistema.usuarios.push(nuevoUsuario)
+            sistema.cargarUsuario(usuarioIngresado, passwordIngresada, "cliente", nombreIngresado, apellidoIngresado, passwordIngresadaConfirmacion, tarjetaIngresada, cvcIngresado)
             mostrarSeccionInicioSesion()
         } else {
             mensaje = `Usuario existente, intente de nuevo`
-
         }
 
     } else {
         mensaje = `Formato incorrecto, intente de nuevo`
     }
-
     document.querySelector("#pMensajeRegistro").innerHTML = mensaje
-
 }
+
+
 //INICIO DE SESION//
+
 document.querySelector("#btnIniciarSesion").addEventListener("click", validarInicioDeSesion)
 
-
-    let esCliente
 function validarInicioDeSesion() {
     let usuarioIngresado = document.querySelector("#txtUsuarioSesion").value;
     let passwordIngresada = document.querySelector("#txtPasswordSesion").value;
@@ -152,14 +152,14 @@ function validarInicioDeSesion() {
     if (posicionUsario!==true) {
         
         if(sistema.usuarios[posicionUsario].password === passwordIngresada){
-            if(sistema.usuarios[posicionUsario].tipoUsuario==="administrador"){
-                alert("success as Admin")
-                esCliente=false
-                inicioSegunTipoUsuario(esCliente)
+            if(sistema.usuarios[posicionUsario].tipoUsuario==="admin"){
+                alert("Inicio de sesión exitoso como administrador")
+                sistema.usuarioLogueado=sistema.usuarios[posicionUsario]
+                inicioSegunTipoUsuario()
             }else{
-                alert("success as Cliente")
-                esCliente=true
-                inicioSegunTipoUsuario(esCliente)
+                alert("Inicio de sesión exitoso como cliente")
+                sistema.usuarioLogueado=sistema.usuarios[posicionUsario]
+                inicioSegunTipoUsuario()
             } 
         }else{
             mensaje="Contraseña incorrecta"
@@ -170,35 +170,42 @@ function validarInicioDeSesion() {
     }
 
     document.querySelector("#pMensajeIniciarSesion").innerHTML=mensaje
-    
 }
 
-function inicioSegunTipoUsuario(esCliente){
+function inicioSegunTipoUsuario(){
+    let tipoUsuario = sistema.usuarioLogueado.tipoUsuario
     ocultarSecciones()
     document.querySelector("#seccionAdministrarDestinos").style.display = "block"
-    ocultarBarraSegunTipoUsuario(esCliente)
-    
+    ocultarBarraSegunTipoUsuario(tipoUsuario)
+
     let tabla=""
-    if(esCliente===true){
+    if(tipoUsuario==="cliente"){
         ocultarElementosSegunClase("admin","cliente")
         for(let i=0; i<sistema.destinos.length; i++){
-            if (sistema.destinos[i].estado==="activo") {
+            if ((sistema.destinos[i].estado==="activo") && !(sistema.destinos[i].esOferta)){
                 tabla+=`<tr>
-                        <td>
-                            ${sistema.destinos[i].nombreDestino}
-                        </td>
-                        <td>${sistema.destinos[i].precio}</td>
-                        <td><img src=${sistema.destinos[i].imagen} alt="prueba"></td>
-                        <td>
-                           <input type="button" value="Reservar" class="boton" data-btnTabla="btnReservar-${sistema.destinos[i].id} />
-                        </td>
-                        </tr>`
+                <td>
+                    ${sistema.destinos[i].nombreDestino}
+                </td>
+                <td>${"US$"}${sistema.destinos[i].precio}</td>
+                <td><img src=${sistema.destinos[i].imagen} alt="prueba"></td>
+                <td>${sistema.destinos[i].descripcion}</td>
+                <td>
+                    <input type="button" value="Reservar" class="botonTabla"  data-btnTabla="btnSeccionRealizarReservas-${sistema.destinos[i].id}" />
+                </td>
+                </tr>`
             }
         }
         
-    }else if(esCliente===false){
+    }else if(tipoUsuario==="admin"){
         ocultarElementosSegunClase("cliente","admin")
+        let valueBoton
         for(let i=0; i<sistema.destinos.length; i++){
+            if(sistema.destinos[i].estado==="activo"){
+                valueBoton="pausar"
+            }else{
+                valueBoton="activar"
+            }
             tabla+=`<tr>
                 <td>
                     ${sistema.destinos[i].nombreDestino}
@@ -208,11 +215,8 @@ function inicioSegunTipoUsuario(esCliente){
                 <td>${sistema.destinos[i].descripcion}</td>
                 <td>
                     <input type="button" value="Editar" class="botonTabla"  data-btnTabla="btnSeccionEditarDestinos-${sistema.destinos[i].id}" />
-                    <input type="button" value="Eliminar" class="botonTabla" data-btnTabla="btnEliminar-${sistema.destinos[i].id}"/>
-                    <select class="botonTabla" name="${sistema.destinos[i].id}" data-btnTabla="slcEstado-${sistema.destinos[i].id}">
-                    <option value="activo">Activado</option>
-                    <option value="pausado">Pausado</option>
-                    </select>
+                    <input type="button" value="Eliminar" class="botonTabla" data-btnTabla="btnSeccionEliminarDestinos-${sistema.destinos[i].id}"/>
+                    <input type="button" value="${valueBoton}" class="botonTabla" data-btnTabla="btnSeccionConfirmarEstado-${sistema.destinos[i].id}"/>
                 </td>
                 </tr>`
         }
@@ -221,10 +225,11 @@ function inicioSegunTipoUsuario(esCliente){
 
     let botonesTabla = document.querySelectorAll(".botonTabla")
         for (let i = 0; i < botonesTabla.length; i++) {
-            botonesTabla[i].addEventListener("click", mostrarSeccionSegunData)
+            botonesTabla[i].addEventListener("click", mostrarSeccionSegunData)            
         }
-
+    
 }
+
 
 //AGREGAR DESTINO
 
@@ -239,20 +244,140 @@ function agregarNuevoDestino() {
     let cantidadCupos = document.querySelector("#nmbAgregarCuposA").value
     let descripcion = document.querySelector("#txtDescripcionA").value
     let img = document.querySelector("#txtSubirIMGA").value
-    
-    console.log("agregardestino",destinoIngresado,precio,checkOferta,descuento,cantidadCupos,descripcion,img)
-
-    if ( validarNuevoDestino(destinoIngresado,precio,descuento,cantidadCupos,descripcion,img)) {
-    
+        
+    if (validarNuevoDestino(destinoIngresado,precio,descuento,cantidadCupos,descripcion,img)) {
+        sistema.cargarDestino(destinoIngresado,precio,img,"pausado",cantidadCupos,descripcion,esOferta)
+        inicioSegunTipoUsuario()
+        
+    }else{
+        document.querySelector("#pErrorSeccionAgregar").innerHTML="Todos los espacios deben ser ingresados y los valores numericos deben ser mayor a 0"
     }
-    if(esOferta){
-        document.querySelector("#cbOfertaA").removeAttribute("disable")
-    }
-    //if es oferta, mandar seccion oferta
-
-    //pushear a sistema
-
-    //numerico,obligatorio agregar todo
 
 }
     
+document.querySelector("#cbOfertaA").addEventListener("click", mostrarCampoDescuento)
+
+function mostrarCampoDescuento(){
+    let esOferta = document.querySelector("#cbOfertaA").checked
+    if(esOferta){
+        document.querySelector("#nmbDescuentoA").removeAttribute("disabled")
+    }else if(!esOferta){
+        document.querySelector("#nmbDescuentoA").setAttribute("disabled","true")
+    }
+    console.log("esOferta", esOferta)
+}   
+
+// EDITAR DESTINOS
+
+function cargarDatosExistentesDestinos(){
+    if (!sistema.destinoEspecifico) {
+        return
+    }
+    document.querySelector("#txtDestinoE").value=sistema.destinoEspecifico.nombreDestino
+    document.querySelector("#nmbPrecioE").value=sistema.destinoEspecifico.precio
+    document.querySelector("#cbOfertaE").value=sistema.destinoEspecifico.esOferta
+    document.querySelector("#nmbAgregarCuposE").value=sistema.destinoEspecifico.cuposDisponibles
+    document.querySelector("#txtDescripcionE").value=sistema.destinoEspecifico.descripcion
+    document.querySelector("#txtSubirIMGE").value=sistema.destinoEspecifico.imagen
+    mostrarCampoDescuento()
+}
+
+
+document.querySelector("#btnEditarDestinoConfirmar").addEventListener("click", editarDestino)
+
+function editarDestino() {
+    cargarDatosExistentesDestinos()
+    let destinoIngresado = document.querySelector("#txtDestinoE").value
+    let precio = document.querySelector("#nmbPrecioE").value
+    let esOferta = document.querySelector("#cbOfertaE").checked
+    let descuento = document.querySelector("#nmbDescuentoE").value
+    let cantidadCupos = document.querySelector("#nmbAgregarCuposE").value
+    let descripcion = document.querySelector("#txtDescripcionE").value
+    let img = document.querySelector("#txtSubirIMGE").value
+  
+//Raro este if, habria que usar otra funcion para validar, ya que no es obligatorio q el  administrador
+//ingrese cada input, sino los que quiere. att>Vivi
+
+    if (validarNuevoDestino(destinoIngresado,precio,descuento,cantidadCupos,descripcion,img)) {
+        for (let i = 0; i < sistema.destinos.length; i++) {
+            let destino= sistema.destinos[i]
+            if(sistema.destinoEspecifico.id===destino.id){
+                destino.nombreDestino=destinoIngresado
+                destino.precio=precio
+                destino.imagen=img
+                destino.cuposDisponibles=cantidadCupos
+                destino.descripcion=descripcion
+                destino.esOferta=esOferta
+            }   
+        }
+    inicioSegunTipoUsuario()
+       
+    }
+    console.log("destinoespecifico",sistema.destinoEspecifico)
+    console.log("arrayDestino")
+
+}
+
+//ELIMINAR DESTINO
+document.querySelector("#btnConfimarEliminacionDestino").addEventListener("click",eliminarDestino)
+
+function eliminarDestino(){
+    let posicionDestino = sistema.buscarDestinoPorID(sistema.destinoEspecifico.id)
+    sistema.destinos.splice(posicionDestino,1)
+    console.log(posicionDestino)
+    inicioSegunTipoUsuario()
+}
+document.querySelector("#btnVolverdDesdeConfirmacionEliminarDestino").addEventListener("click",inicioSegunTipoUsuario)
+
+
+//ACTIVAR O PAUSAR DESTINO
+document.querySelector("#btnConfimarEstado").addEventListener("click",cambiarEstadoDestino)
+
+function cambiarEstadoDestino() {
+    posicionDestino=sistema.buscarDestinoPorID(sistema.destinoEspecifico.id)
+    if(sistema.destinoEspecifico.estado==="activo"){
+        sistema.destinos[posicionDestino].estado="pausado"
+    }else{
+        sistema.destinos[posicionDestino].estado="activo"
+    }
+    inicioSegunTipoUsuario()
+}
+document.querySelector("#btnVolverDesdeConfirmarEstado").addEventListener("click",inicioSegunTipoUsuario)
+
+
+    
+
+
+
+
+
+//CLIENTE-VER OFERTAS
+let seccionOferta=document.querySelector("#seccionOfertas")
+document.querySelector("#btnSeccionOfertas").addEventListener("click",mostrarSeccionOferta)
+function mostrarSeccionOferta(){
+    ocultarBarraSegunTipoUsuario(sistema.usuarioLogueado.tipoUsuario)
+    
+    tabla=""
+    
+    for(let i=0; i<sistema.destinos.length; i++){
+        if ((sistema.destinos[i].estado==="activo") && (sistema.destinos[i].esOferta===true)){
+            tabla+=`<tr>
+            <td>
+                ${sistema.destinos[i].nombreDestino}
+            </td>
+            <td>${"US$"}${sistema.destinos[i].precio}</td>
+            <td><img src=${sistema.destinos[i].imagen} alt="prueba"></td>
+            <td>${sistema.destinos[i].descripcion}</td>
+            <td>
+                <input type="button" value="Reservar" class="botonTabla"  data-btnTabla="btnSeccionRealizarReservas-${sistema.destinos[i].id}" />
+            </td>
+            </tr>`
+        }
+    }
+
+    document.querySelector("#tblOferta").innerHTML=tabla
+}
+
+//funcion volver
+document.querySelector("#btnVolverInicioDesdeOfertas").addEventListener("click",inicioSegunTipoUsuario)
+
