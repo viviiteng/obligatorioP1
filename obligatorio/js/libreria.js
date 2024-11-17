@@ -235,8 +235,8 @@ function validarRegistroDeUsuario (nombre, apellido, usuario, contraseña1, cont
     nombre!=="" && usuario!=="" && apellido!=="" && contraseña1===contraseña2 && tarjetaIngresada.length === 16 && cvc.length === 3
 }
 
-function validarNuevoDestino(destino,precio,descuento,cupos,descripcion,img){
-    return destino!=="" && descripcion!=="" && validarNumerico(precio) && img!=="" && validarNumerico(descuento) && validarNumerico(cupos) && precio>=0 && descuento>=0 && cupos>=0;
+function validarNuevoDestino(destino,precio,cupos,descripcion,img){
+    return destino!=="" && descripcion!=="" && validarNumerico(precio) && img!=="" && validarNumerico(cupos) && precio>=0 && precio!=="" && cupos>=0 && cupos!=="" ;
 }
 
 

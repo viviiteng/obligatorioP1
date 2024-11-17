@@ -27,7 +27,7 @@
             <a href="" id="">Estadisticas</a>
           </li>
           <li>
-            <a href="" id="">Cerrar sesion</a>
+            <a href="" class="btnSeccionCerrarSesion" id="">Cerrar sesion</a>
           </li>
         </ul>
 
@@ -41,13 +41,21 @@
             <a href="" id="">Ofertas</a>
           </li>
           <li>
-            <a href="" id="">Cerrar sesion</a>
+            <a href="" class="btnSeccionCerrarSesion" id="">Cerrar sesion</a>
           </li>
         </ul>
       </nav>
     </header>
 
     <main>
+      <!-- PESTAÑA CONFIRMACION CERRAR SESION -->
+      <section id="seccionCerrarSesion"> 
+        <hr>
+          <p>¿Desea Cerrar Sesion?</p>
+          <input type="button" value="Confirmar" id="btnConfimarEliminacionDestino">
+          <input type="button" value="Cancelar" id="btnVolverdDesdeConfirmacionEliminarDestino">
+        <hr>
+      </section>
 
       <!-- 2 Inicio de Sesion -->
       <section class="seccionGeneral" id="seccionIniciarSesion">
@@ -149,10 +157,6 @@
             <label for="cbOfertaA">Seleccionar en caso de oferta</label>
             <input type="checkbox" id="cbOfertaA">
           </div>
-
-          <label for="nmbDescuentoA">Descuento (%)</label>
-          <input type="number" id="nmbDescuentoA" disabled>
-
           <label for="nmbAgregarCuposA">Ingresar cantidad de cupos disponibles:</label>
           <input type="number" id="nmbAgregarCuposA">
 
@@ -183,10 +187,6 @@
             <label for="cbOfertaE">Seleccionar en caso de oferta</label>
             <input type="checkbox" id="cbOfertaE">
           </div>
-
-          <label for="nmbDescuentoE">Descuento (%)</label>
-          <input type="number" id="nmbDescuentoE" disabled>
-
           <label for="nmbAgregarCuposE">Ingresar cantidad de cupos disponibles:</label>
           <input type="number" id="nmbAgregarCuposE">
 
@@ -217,10 +217,6 @@
           <input type="button" value="Cancelar" id="btnVolverDesdeConfirmarEstado">
         <hr>
       </section>
-
-
-
-      
     
       
       <!-- 4 VER OFERTAS -->
@@ -249,8 +245,8 @@
       <section class="seccionCliente" id="seccionRealizarReservas">
         <h2>REALIZAR RESERVA</h2>
         <form>
-          <label for="txtPersonasReservas">INGRESE LA CANTIDAD DE PERSONAS:</label>
-          <input type="text" id="txtPersonasReservas">
+          <label for="nmbPersonasReservas">INGRESE LA CANTIDAD DE PERSONAS:</label>
+          <input type="number" id="nmbPersonasReservas">
           <label for="slcMetodoDePago">MÉTODO DE PAGO:</label>
           <select id="slcMetodoDePago">
             <option value="-1">Elija una opcion...</option>
@@ -259,9 +255,11 @@
           </select>
           <label for="txtDescripcionReserva">DESCRIPCIÓN:</label>
           <textarea id="txtDescripcionReserva"></textarea>
-          <input type="button" value="RESERVAR">
+          <input type="button" value="Calcular reserva" id="btnCalcularReserva"> 
+          <input type="button" value="RESERVAR" id="btnReservar">
         </form>
-        <p>Millas disponibles: 1000</p>
+        <p id="pMillasDisponibles"></p>
+        <p id="pMontoTotalReserva"></p>
       </section>
       
       

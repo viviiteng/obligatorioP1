@@ -241,12 +241,11 @@ function agregarNuevoDestino() {
     let destinoIngresado = document.querySelector("#txtDestinoA").value
     let precio = document.querySelector("#nmbPrecioA").value
     let esOferta = document.querySelector("#cbOfertaA").checked
-    let descuento = document.querySelector("#nmbDescuentoA").value
     let cantidadCupos = document.querySelector("#nmbAgregarCuposA").value
     let descripcion = document.querySelector("#txtDescripcionA").value
     let img = document.querySelector("#txtSubirIMGA").value
 
-    if (validarNuevoDestino(destinoIngresado, precio, descuento, cantidadCupos, descripcion, img)) {
+    if (validarNuevoDestino(destinoIngresado, precio, cantidadCupos, descripcion, img)) {
         sistema.cargarDestino(destinoIngresado, precio, img, "pausado", cantidadCupos, descripcion, esOferta)
         inicioSegunTipoUsuario()
 
@@ -254,18 +253,6 @@ function agregarNuevoDestino() {
         document.querySelector("#pErrorSeccionAgregar").innerHTML = "Todos los espacios deben ser ingresados y los valores numericos deben ser mayor a 0"
     }
 
-}
-
-document.querySelector("#cbOfertaA").addEventListener("click", mostrarCampoDescuento)
-
-function mostrarCampoDescuento() {
-    let esOferta = document.querySelector("#cbOfertaA").checked
-    if (esOferta) {
-        document.querySelector("#nmbDescuentoA").removeAttribute("disabled")
-    } else if (!esOferta) {
-        document.querySelector("#nmbDescuentoA").setAttribute("disabled", "true")
-    }
-    console.log("esOferta", esOferta)
 }
 
 // EDITAR DESTINOS
@@ -278,18 +265,6 @@ function cargarDatosExistentesDestinos() {
     document.querySelector("#nmbAgregarCuposE").value = sistema.destinoEspecifico.cuposDisponibles 
     document.querySelector("#txtDescripcionE").value = sistema.destinoEspecifico.descripcion  
     document.querySelector("#txtSubirIMGE").value = sistema.destinoEspecifico.imagen 
-    document.querySelector("#nmbDescuentoE").value = sistema.destinoEspecifico.descuento
-}
-
-document.querySelector("#cbOfertaE").addEventListener("click", actualizarEstadoDescuento)
-function actualizarEstadoDescuento() {
-    let checkboxOferta=document.querySelector("#cbOfertaE").checked
-    let inputDescuento= document.querySelector("#nmbDescuentoE")
-    if (checkboxOferta) {
-        inputDescuento.removeAttribute("disabled")
-    } else if (!checkboxOferta){
-        inputDescuento.setAttribute("disabled", "true")
-    }
 }
 
 
@@ -299,32 +274,33 @@ function editarDestino() {
     let destinoIngresado = document.querySelector("#txtDestinoE").value
     let precio = document.querySelector("#nmbPrecioE").value
     let esOferta = document.querySelector("#cbOfertaE").checked
-    let descuento = document.querySelector("#nmbDescuentoE").value
     let cantidadCupos = document.querySelector("#nmbAgregarCuposE").value
     let descripcion = document.querySelector("#txtDescripcionE").value
     let img = document.querySelector("#txtSubirIMGE").value
 
-    if (destinoIngresado==="" || img==="" || precio==="" || Number(precio)<0 || Number(descuento)<0 || cantidadCupos==="" || Number(cantidadCupos)<0) {
-        document.querySelector("#pErrorEditarDestinos").innerHTML="Es obligatorio ingresar el nombre del destino y las secciones numericas no pueden ser menor a 0"
-        return
-    }else{
-
-    for (let i = 0; i < sistema.destinos.length; i++) {
-        let destino = sistema.destinos[i]
-        if (sistema.destinoEspecifico.id === destino.id) {
-            destino.nombreDestino = destinoIngresado
-            destino.precio = precio
-            destino.imagen = img
-            destino.cuposDisponibles = cantidadCupos
-            destino.descripcion = descripcion
-            destino.esOferta = esOferta
+    console.log(destinoIngresado,precio,esOferta,cantidadCupos,descripcion,img)
+    if (validarNuevoDestino(destinoIngresado,precio,cantidadCupos,descripcion,img)){
+        for (let i = 0; i < sistema.destinos.length; i++) {
+            let destino = sistema.destinos[i]
+            if (sistema.destinoEspecifico.id === destino.id) {
+                destino.nombreDestino = destinoIngresado
+                destino.precio = precio
+                destino.imagen = img
+                destino.cuposDisponibles = cantidadCupos
+                destino.descripcion = descripcion
+                destino.esOferta = esOferta
+            }
+        inicioSegunTipoUsuario()    
         }
+    
+    }else{
+        document.querySelector("#pErrorEditarDestinos").innerHTML="Es obligatorio ingresar el nombre del destino y las secciones numericas no pueden ser menor a 0"
     }
-    inicioSegunTipoUsuario()
+    
     console.log("destinoespecifico", sistema.destinoEspecifico)
     console.log("arrayDestino")
 }
-}
+
 
 //ELIMINAR DESTINO
 document.querySelector("#btnConfimarEliminacionDestino").addEventListener("click", eliminarDestino)
@@ -379,7 +355,29 @@ function mostrarSeccionOferta() {
 
     document.querySelector("#tblOferta").innerHTML = tabla
 }
-
-//funcion volver
 document.querySelector("#btnVolverInicioDesdeOfertas").addEventListener("click", inicioSegunTipoUsuario)
 
+//RESERVA
+document.querySelector("#btnReservar").addEventListener("click",realizarReserva)
+    let valorTotalReserva
+function realizarReserva(){
+    let cantidadPersonas = Number(document.querySelector("#nmbPersonasReservas").value)
+    let metodoPago = document.querySelector("#slcMetodoDePago").value
+    let descripcion = document.querySelector("#txtDescripcionReserva").value
+    let millasUsuario = sistema.usuarioLogueado.millas
+    let saldoUsuario = sistema.usuarioIngresado.saldo
+    valorTotalReserva=cantidadPersonas*sistema.destinoEspecifico.precio
+    if(cantidadPersonas>0 && metodoPago!=="-1"){
+        if(metodoPago==="millas"){
+            valorTotalReserva=cantidadPersonas*sistema.destinoEspecifico.precio-millasUsuario
+        }
+    }
+       
+}
+document.querySelector("#btnCalcularReserva").addEventListener("click",calcularYMostrarVAlorReserva)
+
+function calcularYMostrarVAlorReserva(){
+    document.querySelector("#pMontoTotalReserva").innerHTML=`
+    Elmonto total de la rerva es de US$${total}
+    `
+}

@@ -5,7 +5,7 @@ class Sistema {
         this.destinos=[];
         this.idUsuario=11
         this.idDestino=11;  
-
+        this.idReserva=6
         this.destinoEspecifico=null
         this.usuarioLogueado=null
     }
@@ -45,8 +45,12 @@ class Sistema {
     }
     cargarDestino(nombreDestino,precio,img,estado,cupos,descripcion,esOferta){
         this.destinos.push(new Destinos (`DEST_ID_${this.idDestino}`,nombreDestino,precio,img,estado,cupos,descripcion,esOferta))
-        this.idDestino++
-        
+        this.idDestino++    
+    }
+
+    cargarReserva(idUsuario,idDestino,cantidadPersonas,dineroGastado,millasGastadas){
+        this.reservas.push(new Reservas(this.idReserva, idUsuario,idDestino,cantidadPersonas,dineroGastado,millasGastadas))
+        this.idReserva++
     }
     buscarDestinoPorID(idDestino){
 
