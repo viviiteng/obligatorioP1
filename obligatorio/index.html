@@ -18,30 +18,30 @@
       <nav>
         <ul id="ulAdmin">
           <li>
-            <a href="" id="">Listado Reservas</a>
+            <a class="boton" id="btnSeccionAdministrarReservas">Administrar Reservas</a>
           </li>
           <li>
-            <a href="" id="">Aministrar Destinos</a>
+            <a class="botonNavBar" data-btn="btnSeccionAdministrarDestinos-">Aministrar Destinos</a>
           </li>
           <li>
-            <a href="" id="">Estadisticas</a>
+            <a class="boton" id="btnSeccionEstadistica">Estadisticas</a>
           </li>
           <li>
-            <a href="" class="btnSeccionCerrarSesion" id="">Cerrar sesion</a>
+            <a class="botonNavBar" data-btn="btnSeccionCerrarSesion-">Cerrar sesion</a>
           </li>
         </ul>
 
         <ul id="ulCliente">
           <li>
-            <a href="" id="">Listado Reservas</a>
+            <a class="boton" id="btnSeccionListadoDeReservas">Listado Reservas</a>
           </li>
           <li>
-            <a href="" id=""> Explorar Destinos</a>
+            <a class="botonNavBar" data-btn="btnSeccionAdministrarDestinos-"> Explorar Destinos</a>
           <li>
-            <a href="" id="">Ofertas</a>
+            <a class="boton" id="">Ofertas</a>
           </li>
           <li>
-            <a href="" class="btnSeccionCerrarSesion" id="">Cerrar sesion</a>
+            <a class="botonNavBar" data-btn="btnSeccionCerrarSesion-">Cerrar sesion</a>
           </li>
         </ul>
       </nav>
@@ -52,8 +52,8 @@
       <section id="seccionCerrarSesion"> 
         <hr>
           <p>¿Desea Cerrar Sesion?</p>
-          <input type="button" value="Confirmar" id="btnConfimarEliminacionDestino">
-          <input type="button" value="Cancelar" id="btnVolverdDesdeConfirmacionEliminarDestino">
+          <input type="button" value="Confirmar" id="btnConfimarCerrarSesion">
+          <input type="button" value="Cancelar" id="btnVolverAlInicio">
         <hr>
       </section>
 
@@ -123,22 +123,6 @@
             </tr>
           </thead>
           <tbody id="tbDestinos">
-            <!-- <tr>
-              <td>
-                Destino 1
-              </td>
-              <td>$$$</td>
-              <td><img src="https://place-hold.it/100x100/aaa/imagen.jpg" alt="prueba"></td>
-              <td>
-                <input type="button" value="Reservar" />
-                <input type="button" value="Editar" class="boton botonAdmin" />
-                <input type="button" value="Eliminar" class="boton botonAdmin"/>
-                <select id="slcEstadoExplorar" class="boton botonAdmin">
-                  <option value="activar">Activado</option>
-                  <option value="pausar">Pausado</option>
-                </select>
-              </td>
-            </tr> -->
           </tbody>
         </table>
       </section>
@@ -164,7 +148,7 @@
           <textarea id="txtDescripcionA"></textarea>
 
           <label for="txtSubirIMGA">Subir imagen:</label>
-          <input type="url" id="txtSubirIMGA">
+          <input type="text" id="txtSubirIMGA">
           <input type="button" value="Agregar" id="btnAgregarDestinoConfirmar">
         </form>
         <p id="pErrorSeccionAgregar"></p>
@@ -194,7 +178,7 @@
           <textarea id="txtDescripcionE"></textarea>
 
           <label for="txtSubirIMGE">Subir imagen:</label>
-          <input type="url" id="txtSubirIMGE">
+          <input type="text" id="txtSubirIMGE">
           <input type="button" value="Editar" id="btnEditarDestinoConfirmar">
         </form>
         <p id="pErrorEditarDestinos"> </p>
@@ -283,7 +267,7 @@
             <td>***</td>
             <td>ACTIVA</td>
             <td>
-              <input type="button" value="Cancelar Reserva" disabled />
+              <input type="button" value="Cancelar Reserva"/>
             </td>
           </tr>
           <tr>
@@ -300,7 +284,7 @@
       </section>
 
       <!-- 7 CANCELAR O APROBAR RESERVAS -->
-      <section class="seccionAdmin" id="seccionGestionDeReservas">
+      <section class="seccionAdmin" id="seccionAdministrarReservas">
 
         <h2>LISTADO DE RESERVAS PENDIENTES</h2>
 
@@ -394,7 +378,7 @@
 
 
       <!-- 9 Ver información estadística  -->
-      <section class="seccionAdmin" id="seccionInformacionEstadistica">
+      <section class="seccionAdmin" id="seccionEstadistica">
         <h2>Informe de ganancias</h2>
         <p id="totalGanancias">Total de ganancias: $$$$</p>
         <table>

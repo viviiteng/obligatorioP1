@@ -72,7 +72,7 @@ for (let i = 0; i < botones.length; i++) {
 
 function mostrarSeccionSegunData() {
 
-    let idBtn = this.getAttribute("data-btnTabla")
+    let idBtn = this.getAttribute("data-btn")
     let idSeccion = idBtn.charAt(3).toLowerCase() + idBtn.substring(4, idBtn.indexOf("-"))
     let secciones = document.getElementsByTagName("section")
 
@@ -92,6 +92,14 @@ function mostrarSeccionSegunData() {
     // console.log("prueba", idBtn.substring(idBtn.indexOf("-")+1))
 }
 
+//CERRAR SESION
+let botonesNav = document.querySelectorAll(".botonNavBar")
+    for (let i = 0; i < botonesNav.length; i++) {
+        botonesNav[i].addEventListener("click", mostrarSeccionSegunData)
+}
+
+document.querySelector("#btnConfimarCerrarSesion").addEventListener("click",mostrarSeccionInicioSesion)
+document.querySelector("#btnVolverAlInicio").addEventListener("click",inicioSegunTipoUsuario)
 
 //REGISTRO DE USUARIO//
 
@@ -188,7 +196,7 @@ function inicioSegunTipoUsuario() {
                 <td><img src=${sistema.destinos[i].imagen} alt="prueba"></td>
                 <td>${sistema.destinos[i].descripcion}</td>
                 <td>
-                    <input type="button" value="Reservar" class="botonTabla"  data-btnTabla="btnSeccionRealizarReservas-${sistema.destinos[i].id}" />
+                    <input type="button" value="Reservar" class="botonTabla"  data-btn="btnSeccionRealizarReservas-${sistema.destinos[i].id}" />
                 </td>
                 </tr>`
             }
@@ -211,9 +219,9 @@ function inicioSegunTipoUsuario() {
                 <td><img src=${sistema.destinos[i].imagen} alt="prueba"></td>
                 <td>${sistema.destinos[i].descripcion}</td>
                 <td>
-                    <input type="button" value="Editar" class="botonTabla btnEditar"  data-btnTabla="btnSeccionEditarDestinos-${sistema.destinos[i].id}" />
-                    <input type="button" value="Eliminar" class="botonTabla" data-btnTabla="btnSeccionEliminarDestinos-${sistema.destinos[i].id}"/>
-                    <input type="button" value="${valueBoton}" class="botonTabla" data-btnTabla="btnSeccionConfirmarEstado-${sistema.destinos[i].id}"/>
+                    <input type="button" value="Editar" class="botonTabla btnEditar"  data-btn="btnSeccionEditarDestinos-${sistema.destinos[i].id}" />
+                    <input type="button" value="Eliminar" class="botonTabla" data-btn="btnSeccionEliminarDestinos-${sistema.destinos[i].id}"/>
+                    <input type="button" value="${valueBoton}" class="botonTabla" data-btn="btnSeccionConfirmarEstado-${sistema.destinos[i].id}"/>
                 </td>
                 </tr>`
         }
@@ -348,7 +356,7 @@ function mostrarSeccionOferta() {
             <td><img src=${sistema.destinos[i].imagen} alt="prueba"></td>
             <td>${sistema.destinos[i].descripcion}</td>
             <td>
-            <input type="button" value="Reservar" class="botonTablaOferta"  data-btnTabla="btnSeccionRealizarReservas-${sistema.destinos[i].id}" />            
+            <input type="button" value="Reservar" class="botonTablaOferta"  data-btn="btnSeccionRealizarReservas-${sistema.destinos[i].id}" />            
             </td>
             </tr>`
             
