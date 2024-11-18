@@ -116,7 +116,7 @@
           <thead>
             <tr>
               <th>Nombre</th>
-              <th>Precio</th>
+              <th>Precio por Persona</th>
               <th>Imagen</th>
               <th>Descripcion</th>
               <th></th>
@@ -151,7 +151,7 @@
           <label for="txtDestinoA">Nombre del destino:</label>
           <input type="text" id="txtDestinoA" />
 
-          <label for="nmbPrecioA">Precio:</label>
+          <label for="nmbPrecioA">Precio por persona:</label>
           <input type="number" id="nmbPrecioA">
           <div id="flexBoxA">
             <label for="cbOfertaA">Seleccionar en caso de oferta</label>
@@ -164,7 +164,7 @@
           <textarea id="txtDescripcionA"></textarea>
 
           <label for="txtSubirIMGA">Subir imagen:</label>
-          <input type="text" id="txtSubirIMGA">
+          <input type="url" id="txtSubirIMGA">
           <input type="button" value="Agregar" id="btnAgregarDestinoConfirmar">
         </form>
         <p id="pErrorSeccionAgregar"></p>
@@ -180,7 +180,7 @@
           <label for="txtDestinoE">Nombre del destino:</label>
           <input type="text" id="txtDestinoE" />
 
-          <label for="nmbPrecioE">Precio:</label>
+          <label for="nmbPrecioE">Precio por persona:</label>
           <input type="number" id="nmbPrecioE">
           
           <div id="flexBoxE">
@@ -194,7 +194,7 @@
           <textarea id="txtDescripcionE"></textarea>
 
           <label for="txtSubirIMGE">Subir imagen:</label>
-          <input type="text" id="txtSubirIMGE">
+          <input type="url" id="txtSubirIMGE">
           <input type="button" value="Editar" id="btnEditarDestinoConfirmar">
         </form>
         <p id="pErrorEditarDestinos"> </p>
@@ -228,7 +228,7 @@
           <thead>
             <tr>
               <th>Destino</th>
-              <th>Precio</th>
+              <th>Precio por Persona</th>
               <th>Imagen</th>
               <th>Descripcion</th>
               <th></th>
@@ -255,11 +255,11 @@
           </select>
           <label for="txtDescripcionReserva">DESCRIPCIÓN:</label>
           <textarea id="txtDescripcionReserva"></textarea>
-          <input type="button" value="Calcular reserva" id="btnCalcularReserva"> 
+
           <input type="button" value="RESERVAR" id="btnReservar">
         </form>
-        <p id="pMillasDisponibles"></p>
-        <p id="pMontoTotalReserva"></p>
+        <p id="pMensajeReserva"></p>
+  
       </section>
       
       

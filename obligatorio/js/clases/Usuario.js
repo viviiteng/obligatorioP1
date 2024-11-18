@@ -10,9 +10,12 @@ class Usuario {
         this.numeroTarjeta=numeroTarjeta;
         this.cvc=cvc;
         this.saldo=15000
-        this.millas=1000
+        this.millas=0
     }
     cambiarSaldo(saldoNuevo){
         this.saldo = saldoNuevo;
+    }
+    cambiarMillas(nuevoSaldoMillas){
+        this.millas = nuevoSaldoMillas
     }
 }

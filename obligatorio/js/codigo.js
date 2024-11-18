@@ -224,6 +224,7 @@ function inicioSegunTipoUsuario() {
     for (let i = 0; i < botonesTabla.length; i++) {
         botonesTabla[i].addEventListener("click", mostrarSeccionSegunData)
     }
+    
 
     let botonesEditar = document.querySelectorAll(".btnEditar")
     for (let i = 0; i < botonesEditar.length; i++) {
@@ -335,7 +336,7 @@ document.querySelector("#btnSeccionOfertas").addEventListener("click", mostrarSe
 function mostrarSeccionOferta() {
     ocultarBarraSegunTipoUsuario(sistema.usuarioLogueado.tipoUsuario)
 
-    tabla = ""
+    let tabla = ""
 
     for (let i = 0; i < sistema.destinos.length; i++) {
         if ((sistema.destinos[i].estado === "activo") && (sistema.destinos[i].esOferta === true)) {
@@ -347,37 +348,62 @@ function mostrarSeccionOferta() {
             <td><img src=${sistema.destinos[i].imagen} alt="prueba"></td>
             <td>${sistema.destinos[i].descripcion}</td>
             <td>
-                <input type="button" value="Reservar" class="botonTabla"  data-btnTabla="btnSeccionRealizarReservas-${sistema.destinos[i].id}" />
+            <input type="button" value="Reservar" class="botonTablaOferta"  data-btnTabla="btnSeccionRealizarReservas-${sistema.destinos[i].id}" />            
             </td>
             </tr>`
+            
         }
-    }
+    } 
 
     document.querySelector("#tblOferta").innerHTML = tabla
+    let botonesTabla = document.querySelectorAll(".botonTablaOferta")
+    for (let i = 0; i < botonesTabla.length; i++) {
+        botonesTabla[i].addEventListener("click", mostrarSeccionSegunData)
+    }
+
+    console.log("botonesTabla",botonesTabla)
+    
 }
 document.querySelector("#btnVolverInicioDesdeOfertas").addEventListener("click", inicioSegunTipoUsuario)
 
 //RESERVA
 document.querySelector("#btnReservar").addEventListener("click",realizarReserva)
-    let valorTotalReserva
+    
 function realizarReserva(){
     let cantidadPersonas = Number(document.querySelector("#nmbPersonasReservas").value)
     let metodoPago = document.querySelector("#slcMetodoDePago").value
     let descripcion = document.querySelector("#txtDescripcionReserva").value
     let millasUsuario = sistema.usuarioLogueado.millas
-    let saldoUsuario = sistema.usuarioIngresado.saldo
-    valorTotalReserva=cantidadPersonas*sistema.destinoEspecifico.precio
-    if(cantidadPersonas>0 && metodoPago!=="-1"){
-        if(metodoPago==="millas"){
-            valorTotalReserva=cantidadPersonas*sistema.destinoEspecifico.precio-millasUsuario
+    let saldoUsuario = sistema.usuarioLogueado.saldo
+    let precioPaquete= sistema.destinoEspecifico.precio
+    let dineroGastado= precioPaquete*cantidadPersonas
+    let mensaje=""
+    if(cantidadPersonas>0 && descripcion!==""){
+        switch (metodoPago) {
+            case "millas":
+                dineroGastado=precioPaquete*cantidadPersonas-millasUsuario
+                if(saldoUsuario>=dineroGastado){
+                    sistema.cargarReserva(sistema.usuarioLogueado.id,sistema.destinoEspecifico.id,cantidadPersonas,dineroGastado,millasUsuario,"pendiente",descripcion)
+                    inicioSegunTipoUsuario()
+                }else{
+                    mensaje=`Saldo insuficiente`
+                }
+            break;
+            case "tarjeta":
+                if(saldoUsuario>=dineroGastado){
+                    sistema.cargarReserva(sistema.usuarioLogueado.id,sistema.destinoEspecifico.id,cantidadPersonas,dineroGastado,0,"pendiente",descripcion)
+                    inicioSegunTipoUsuario()
+                }else{
+                    mensaje=`Saldo insuficiente`
+                }    
+            break;
+            default:
+                mensaje=`Seleccione un metodo de pago`
+            break;
         }
-    }
-       
-}
-document.querySelector("#btnCalcularReserva").addEventListener("click",calcularYMostrarVAlorReserva)
 
-function calcularYMostrarVAlorReserva(){
-    document.querySelector("#pMontoTotalReserva").innerHTML=`
-    Elmonto total de la rerva es de US$${total}
-    `
+    }else{
+        mensaje=`Por favor complete la informacion requerida`
+    }
+    document.querySelector("#pMensajeReserva").innerHTML=mensaje
 }

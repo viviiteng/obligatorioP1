@@ -10,7 +10,6 @@ class Sistema {
         this.usuarioLogueado=null
     }
 
-
     precargarDatos(){
         const admin1= new Usuario(1,"Agustin", "Agu123", "admin", null, null, null, null, null);
         const admin2= new Usuario(2,"Viviana", "Vivi123", "admin", null, null, null, null, null);
@@ -26,7 +25,9 @@ class Sistema {
 
         
         this.usuarios.push(admin1,admin2,admin3,admin4,admin5,cliente1,cliente2,cliente3,cliente4,cliente5)
-
+        this.buscarUsuarioPorId(6).cambiarMillas(1000);
+        this.buscarUsuarioPorId(7).cambiarMillas(2000);      
+        this.buscarUsuarioPorId(8).cambiarMillas(3000);
         const destino1= new Destinos("DEST_ID_1","Nueva York",1000,"img/NuevaYork.jpeg","activo",10,"La ciudad que nunca duerme, llena de posibilidades.",true)
         const destino2= new Destinos("DEST_ID_2","Paris",2000,"img/Paris.jpeg","pausado",10,"Romance y arte en la mágica Ciudad de la Luz.",false)
         const destino3= new Destinos("DEST_ID_3","Rio de Janeiro",250,"img/Rio.jpeg","activo",10,"Playas, samba y el vibrante Carnaval carioca.",true)
@@ -48,8 +49,8 @@ class Sistema {
         this.idDestino++    
     }
 
-    cargarReserva(idUsuario,idDestino,cantidadPersonas,dineroGastado,millasGastadas){
-        this.reservas.push(new Reservas(this.idReserva, idUsuario,idDestino,cantidadPersonas,dineroGastado,millasGastadas))
+    cargarReserva(idUsuario,idDestino,cantidadPersonas,dineroGastado,millasGastadas,estadoReserva,descripcion){
+        this.reservas.push(new Reservas(this.idReserva, idUsuario,idDestino,cantidadPersonas,dineroGastado,millasGastadas,estadoReserva,descripcion))
         this.idReserva++
     }
     buscarDestinoPorID(idDestino){
@@ -62,6 +63,14 @@ class Sistema {
         }
         console.log("idDestino",this.destinoEspecifico)
 
+    }
+
+    buscarUsuarioPorId(idUsuario) {
+        for (let i = 0; i < this.usuarios.length; i++) {
+            if (idUsuario===this.usuarios[i].id) {
+                return this.usuarios[i]
+            }
+        }
     }
     
 }
