@@ -248,6 +248,9 @@
       
       
       <!-- 6 VER LISTADO DE RESERVAS Y CANCELAR -->
+      
+
+
       <section class="seccionCliente" id="seccionListadoDeReservas">
         <h2>LISTADO DE RESERVAS</h2>
 
@@ -285,95 +288,69 @@
 
       <!-- 7 CANCELAR O APROBAR RESERVAS -->
       <section class="seccionAdmin" id="seccionAdministrarReservas">
+        <input type="button" value="Reservas pendientes" class="boton" id="btnSeccionReservasPendientes">
+        <input type="button" value="Reservas aprobadas" class="boton" id="btnSeccionListaDeReservasAprobadas">
+        <input type="button" value="Reservas rechazadas" class="boton" id="btnSeccionListaDeReservasCanceladas">
+      </section>
 
+      <section class="seccionAdmin" id="seccionReservasPendientes">
         <h2>LISTADO DE RESERVAS PENDIENTES</h2>
-
         <table>
           <thead>
             <tr>
+              <th>Reservante</th>
               <th>Destino</th>
-              <th>Monto total</th>
               <th>Cantidad de personas</th>
+              <th>Monto en US$</th>
+              <th>Monto en Millas</th>
               <th>Estado de la reserva</th>
+              <th>Descripcion</th>
               <th>Edicion</th>
             </tr>
           </thead>
-          <tr>
-            <td>Destino 1</td>
-            <td>$$$</td>
-            <td>***</td>
-            <td>ACTIVA</td>
-            <td>
-              <input type="button" value="Procesar Reserva" />
-            </td>
-          </tr>
-          <tr>
-            <td>Destino 2</td>
-            <td>$$$</td>
-            <td>***</td>
-            <td>PENDIENTE</td>
-            <td>
-              <input type="button" value="Procesar Reserva" />
-            </td>
-          </tr>
-        </table>
+          <tbody id="tbListaDeReservasPendientes">  
+          </tbody>
+        </table>      
       </section>
 
       <section class="seccionAdmin" id="seccionListaDeReservasAprobadas">
         <h2>LISTADO DE RESERVAS APROBADAS</h2>
-
         <table>
           <thead>
             <tr>
+              <th>Reservante</th>
               <th>Destino</th>
-              <th>Monto total</th>
               <th>Cantidad de personas</th>
+              <th>Monto en US$</th>
+              <th>Monto en Millas</th>
               <th>Estado de la reserva</th>
-
+              <th>Descripcion</th>
+              <th>Edicion</th>
             </tr>
           </thead>
-          <tr>
-            <td>Destino 1</td>
-            <td>$$$</td>
-            <td>***</td>
-            <td>APROBADA</td>
-
-          </tr>
-          <tr>
-            <td>Destino 2</td>
-            <td>$$$</td>
-            <td>***</td>
-            <td>APROBADA</td>
-
-          </tr>
-        </table>
+          <tbody id="tbListaDeReservasAprobadas">  
+          </tbody>
+        </table>  
       </section>
 
       <section class="seccionAdmin" id="seccionListaDeReservasCanceladas">
         <h2>LISTADO DE RESERVAS CANCELADAS</h2>
-
         <table>
           <thead>
             <tr>
+              <th>Reservante</th>
               <th>Destino</th>
-              <th>Monto total</th>
               <th>Cantidad de personas</th>
+              <th>Monto en US$</th>
+              <th>Monto en Millas</th>
               <th>Estado de la reserva</th>
+              <th>Descripcion</th>
+              <th>Edicion</th>
             </tr>
           </thead>
-          <tr>
-            <td>Destino 1</td>
-            <td>$$$</td>
-            <td>***</td>
-            <td>CANCELADA</td>
-          </tr>
-          <tr>
-            <td>Destino 2</td>
-            <td>$$$</td>
-            <td>***</td>
-            <td>CANCELADA</td>
-          </tr>
-        </table>
+          <tbody id="tbListaDeReservasCanceladas">  
+          </tbody>
+        </table>  
       </section>
 
 

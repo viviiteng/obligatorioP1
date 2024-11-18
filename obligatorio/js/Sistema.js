@@ -11,6 +11,8 @@ class Sistema {
     }
 
     precargarDatos(){
+        
+
         const admin1= new Usuario(1,"Agustin", "Agu123", "admin", null, null, null, null, null);
         const admin2= new Usuario(2,"Viviana", "Vivi123", "admin", null, null, null, null, null);
         const admin3= new Usuario(3,"Joaquin", "Joa123", "admin", null, null, null, null, null);
@@ -22,12 +24,12 @@ class Sistema {
         const cliente3= new Usuario(8,"Juli", "Juli123", "cliente", "Julieta", "Gonzalez", "Juli123", 5223450370829605, 123);
         const cliente4= new Usuario(9,"Sofi", "Sofi123", "cliente", "Sofia", "Salvado", "Sofi123", 5223450370829605, 123);
         const cliente5= new Usuario(10,"Santiago", "Sant234", "cliente", "Santiago", "Pereira", "Sant234", 5223450370829605, 123);
-
-        
         this.usuarios.push(admin1,admin2,admin3,admin4,admin5,cliente1,cliente2,cliente3,cliente4,cliente5)
+
         this.buscarUsuarioPorId(6).cambiarMillas(1000);
         this.buscarUsuarioPorId(7).cambiarMillas(2000);      
         this.buscarUsuarioPorId(8).cambiarMillas(3000);
+
         const destino1= new Destinos("DEST_ID_1","Nueva York",1000,"img/NuevaYork.jpeg","activo",10,"La ciudad que nunca duerme, llena de posibilidades.",true)
         const destino2= new Destinos("DEST_ID_2","Paris",2000,"img/Paris.jpeg","pausado",10,"Romance y arte en la mágica Ciudad de la Luz.",false)
         const destino3= new Destinos("DEST_ID_3","Rio de Janeiro",250,"img/Rio.jpeg","activo",10,"Playas, samba y el vibrante Carnaval carioca.",true)
@@ -39,6 +41,12 @@ class Sistema {
         const destino9= new Destinos("DEST_ID_9","China",2800,"img/China.jpeg","activo",10,"Cultura milenaria y maravillas como la Gran Muralla.",false)
         const destino10= new Destinos("DEST_ID_10","Barcelona",2600,"img/Barcelona.jpeg","activo",10,"Arte, arquitectura y playas en la joya catalana.",false)
         this.destinos.push(destino1,destino2,destino3,destino4,destino5,destino6,destino7,destino8,destino9,destino10)
+
+        const reserva1 = new Reservas(1,6,"DEST_ID_3",1,250,0,"pendiente","descripcion1");
+        const reserva2 = new Reservas(2,7,"DEST_ID_4",1,0,200,"aprobada","descripcion2");
+        const reserva3 = new Reservas(3,8,"DEST_ID_5",1,0,200,"cancelada","descripcion3");
+        this.reservas.push(reserva1,reserva2,reserva3)
+        
     }
     cargarUsuario(usuario, password, tipoUsuario, nombre, apellido, confirmaContraseña, numeroTarjeta,cvc){
         this.usuarios.push(new Usuario(this.idUsuario, usuario, password, tipoUsuario, nombre, apellido, confirmaContraseña, numeroTarjeta,cvc))
@@ -53,7 +61,11 @@ class Sistema {
         this.reservas.push(new Reservas(this.idReserva, idUsuario,idDestino,cantidadPersonas,dineroGastado,millasGastadas,estadoReserva,descripcion))
         this.idReserva++
     }
-    buscarDestinoPorID(idDestino){
+
+    // Funcion: busca el destino por medio del id
+    // - Devuelve la posicion de ese destino
+    // - Guarda en una variabla ese objeto
+    buscarPosicionDestinoPorID(idDestino){
 
         for (let i = 0; i < this.destinos.length; i++) {
             if (idDestino===this.destinos[i].id) {
@@ -61,10 +73,21 @@ class Sistema {
                 return i
             }
         }
-        console.log("idDestino",this.destinoEspecifico)
-
     }
 
+    // Funcion: busca el destino por medio del id
+    // - Devuelve el objeto de ese destino
+    buscarObjetoDestinoPorID(idDestino){
+
+        for (let i = 0; i < this.destinos.length; i++) {
+            if (idDestino===this.destinos[i].id) {
+                return this.destinos[i]
+            }
+        }
+    }
+
+    // Funcion: busca el usuario por medio del id
+    // - Devuelve el objeto de ese usuario
     buscarUsuarioPorId(idUsuario) {
         for (let i = 0; i < this.usuarios.length; i++) {
             if (idUsuario===this.usuarios[i].id) {

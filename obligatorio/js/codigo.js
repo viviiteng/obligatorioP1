@@ -76,7 +76,7 @@ function mostrarSeccionSegunData() {
     let idSeccion = idBtn.charAt(3).toLowerCase() + idBtn.substring(4, idBtn.indexOf("-"))
     let secciones = document.getElementsByTagName("section")
 
-    sistema.buscarDestinoPorID(idBtn.substring(idBtn.indexOf("-") + 1))
+    sistema.buscarPosicionDestinoPorID(idBtn.substring(idBtn.indexOf("-") + 1))
     for (let i = 0; i < secciones.length; i++) {
         let idExtraidoHTML = secciones[i].getAttribute("id")
 
@@ -89,7 +89,7 @@ function mostrarSeccionSegunData() {
         console.log("coincidenDATA", idExtraidoHTML === idSeccion)
     }
     console.log("************************")
-    // console.log("prueba", idBtn.substring(idBtn.indexOf("-")+1))
+    
 }
 
 //CERRAR SESION
@@ -315,9 +315,8 @@ function editarDestino() {
 document.querySelector("#btnConfimarEliminacionDestino").addEventListener("click", eliminarDestino)
 
 function eliminarDestino() {
-    let posicionDestino = sistema.buscarDestinoPorID(sistema.destinoEspecifico.id)
+    let posicionDestino = sistema.buscarPosicionDestinoPorID(sistema.destinoEspecifico.id)
     sistema.destinos.splice(posicionDestino, 1)
-    console.log(posicionDestino)
     inicioSegunTipoUsuario()
 }
 document.querySelector("#btnVolverdDesdeConfirmacionEliminarDestino").addEventListener("click", inicioSegunTipoUsuario)
@@ -327,7 +326,7 @@ document.querySelector("#btnVolverdDesdeConfirmacionEliminarDestino").addEventLi
 document.querySelector("#btnConfimarEstado").addEventListener("click", cambiarEstadoDestino)
 
 function cambiarEstadoDestino() {
-    posicionDestino = sistema.buscarDestinoPorID(sistema.destinoEspecifico.id)
+    posicionDestino = sistema.buscarPosicionDestinoPorID(sistema.destinoEspecifico.id)
     if (sistema.destinoEspecifico.estado === "activo") {
         sistema.destinos[posicionDestino].estado = "pausado"
     } else {
@@ -414,4 +413,122 @@ function realizarReserva(){
         mensaje=`Por favor complete la informacion requerida`
     }
     document.querySelector("#pMensajeReserva").innerHTML=mensaje
+}
+
+
+//LISTA DE RESERVAS PENDIENTES
+document.querySelector("#btnSeccionReservasPendientes").addEventListener("click", mostrarReservasPendientes)
+function mostrarReservasPendientes() {
+    ocultarBarraSegunTipoUsuario(sistema.usuarioLogueado.tipoUsuario)
+    let idUsuarioReservante
+    let tabla = ""
+
+    for (let i = 0; i < sistema.reservas.length; i++) {
+        idUsuarioReservante=sistema.reservas[i].idUsuario
+        idDestino=sistema.reservas[i].idDestino
+        
+        if (sistema.reservas[i].estadoReserva==="pendiente") {
+            tabla += `
+            <tr>
+              <td>${sistema.buscarUsuarioPorId(idUsuarioReservante).usuario}</td>
+              <td>${sistema.buscarObjetoDestinoPorID(idDestino).nombreDestino}</td>
+              <td>${sistema.reservas[i].cantidadPersonas}</td>
+              <td>${sistema.reservas[i].dineroGastado}</td>
+              <td>${sistema.reservas[i].millasGastadas}</td>
+              <td>${sistema.reservas[i].estadoReserva}</td>
+              <td>${sistema.reservas[i].descripcion}</td>
+              <td>
+                <input type="button" value="Procesar Reserva" data-btn="btnSeccionConfirmarReserva-${sistema.reservas[i].id}"/>
+                <input type="button" value="Procesar Reserva" data-btn="btnSeccionConfirmarReserva-${sistema.reservas[i].id}"/>
+                <input type="button" value="Procesar Reserva" data-btn="btnSeccionConfirmarReserva-${sistema.reservas[i].id}"/>
+              </td>
+            </tr>
+            `
+            
+        }
+    } 
+    document.querySelector("#tbListaDeReservasPendientes").innerHTML = tabla
+
+    let botonesTabla = document.querySelectorAll(".botonTabla")
+    for (let i = 0; i < botonesTabla.length; i++) {
+        botonesTabla[i].addEventListener("click", mostrarSeccionSegunData)
+    }  
+}
+
+//LISTA DE RESERVAS APROBADAS
+document.querySelector("#btnSeccionReservasPendientes").addEventListener("click", mostrarReservasAprobadas)
+function mostrarReservasAprobadas() {
+    ocultarBarraSegunTipoUsuario(sistema.usuarioLogueado.tipoUsuario)
+    let idUsuarioReservante
+    let tabla = ""
+
+    for (let i = 0; i < sistema.reservas.length; i++) {
+        idUsuarioReservante=sistema.reservas[i].idUsuario
+        idDestino=sistema.reservas[i].idDestino
+        
+        if (sistema.reservas[i].estadoReserva==="aprobada") {
+            tabla += `
+            <tr>
+              <td>${sistema.buscarUsuarioPorId(idUsuarioReservante).usuario}</td>
+              <td>${sistema.buscarObjetoDestinoPorID(idDestino).nombreDestino}</td>
+              <td>${sistema.reservas[i].cantidadPersonas}</td>
+              <td>${sistema.reservas[i].dineroGastado}</td>
+              <td>${sistema.reservas[i].millasGastadas}</td>
+              <td>${sistema.reservas[i].estadoReserva}</td>
+              <td>${sistema.reservas[i].descripcion}</td>
+              <td>
+                <input type="button" value="Procesar Reserva" data-btn="btnSeccionConfirmarReserva-${sistema.reservas[i].id}"/>
+                <input type="button" value="Procesar Reserva" data-btn="btnSeccionConfirmarReserva-${sistema.reservas[i].id}"/>
+                <input type="button" value="Procesar Reserva" data-btn="btnSeccionConfirmarReserva-${sistema.reservas[i].id}"/>
+              </td>
+            </tr>
+            `
+            
+        }
+    } 
+    document.querySelector("#tbListaDeReservasAprobadas").innerHTML = tabla
+
+    let botonesTabla = document.querySelectorAll(".botonTabla")
+    for (let i = 0; i < botonesTabla.length; i++) {
+        botonesTabla[i].addEventListener("click", mostrarSeccionSegunData)
+    }   
+}
+
+//LISTA DE RESERVAS CANCELADAS
+document.querySelector("#btnSeccionListaDeReservasCanceladas").addEventListener("click", mostrarReservasCanceladas)
+function mostrarReservasCanceladas() {
+    ocultarBarraSegunTipoUsuario(sistema.usuarioLogueado.tipoUsuario)
+    let idUsuarioReservante
+    let tabla = ""
+
+    for (let i = 0; i < sistema.reservas.length; i++) {
+        idUsuarioReservante=sistema.reservas[i].idUsuario
+        idDestino=sistema.reservas[i].idDestino
+        
+        if (sistema.reservas[i].estadoReserva==="cancelada") {
+            tabla += `
+            <tr>
+              <td>${sistema.buscarUsuarioPorId(idUsuarioReservante).usuario}</td>
+              <td>${sistema.buscarObjetoDestinoPorID(idDestino).nombreDestino}</td>
+              <td>${sistema.reservas[i].cantidadPersonas}</td>
+              <td>${sistema.reservas[i].dineroGastado}</td>
+              <td>${sistema.reservas[i].millasGastadas}</td>
+              <td>${sistema.reservas[i].estadoReserva}</td>
+              <td>${sistema.reservas[i].descripcion}</td>
+              <td>
+                <input type="button" value="Procesar Reserva" data-btn="btnSeccionConfirmarReserva-${sistema.reservas[i].id}"/>
+                <input type="button" value="Procesar Reserva" data-btn="btnSeccionConfirmarReserva-${sistema.reservas[i].id}"/>
+                <input type="button" value="Procesar Reserva" data-btn="btnSeccionConfirmarReserva-${sistema.reservas[i].id}"/>
+              </td>
+            </tr>
+            `
+            
+        }
+    } 
+    document.querySelector("#tbListaDeReservasCanceladas").innerHTML = tabla
+
+    let botonesTabla = document.querySelectorAll(".botonTabla")
+    for (let i = 0; i < botonesTabla.length; i++) {
+        botonesTabla[i].addEventListener("click", mostrarSeccionSegunData)
+    }   
 }
