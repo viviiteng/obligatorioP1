@@ -45,7 +45,7 @@ class Sistema {
 
         const reserva1 = new Reservas(1,6,"DEST_ID_3",1,250,0,"pendiente","descripcion1");
         const reserva2 = new Reservas(2,7,"DEST_ID_4",1,200,200,"aprobada","descripcion2");
-        const reserva3 = new Reservas(3,8,"DEST_ID_8",10,30000,200,"cancelada","descripcion3");
+        const reserva3 = new Reservas(3,8,"DEST_ID_8",10,30000,200,"rechazada","descripcion3");
         const reserva4 = new Reservas(4,9,"DEST_ID_6",2,5000,0,"pendiente","descripcion4");
         const reserva5 = new Reservas(5,10,"DEST_ID_7",2,4200,0,"aprobada","descripcion5");
 

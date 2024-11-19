@@ -89,8 +89,9 @@ function mostrarSeccionSegunData() {
         //console.log("idExtraidoHTMLDATA", idExtraidoHTML)
         //console.log("idSeccionDATA", idSeccion)
         //console.log("coincidenDATA", idExtraidoHTML === idSeccion)
+        //console.log("************************")
     }
-    console.log("************************")
+    
     
 }
 
@@ -435,8 +436,7 @@ function mostrarReservasPendientes() {
               <td>${sistema.reservas[i].estadoReserva}</td>
               <td>${sistema.reservas[i].descripcion}</td>
               <td>
-                <input type="button" value="Aprobar reserva" class="botonTabla" data-btn="btnSeccionAprobarReserva-${sistema.reservas[i].idReserva}"/>
-                <input type="button" value="Rechazar reserva" class="botonTabla" data-btn="btnSeccionRechazarReserva-${sistema.reservas[i].idReserva}"/>
+                <input type="button" value="Aprobar reserva" class="botonTabla" data-btn="btnSeccionProcesarReserva-${sistema.reservas[i].idReserva}"/>
               </td>
             </tr>
             `
@@ -481,9 +481,9 @@ function mostrarReservasAprobadas() {
     document.querySelector("#tbListaDeReservasAprobadas").innerHTML = tabla 
 }
 
-//LISTA DE RESERVAS CANCELADAS
-document.querySelector("#btnSeccionListaDeReservasCanceladas").addEventListener("click", mostrarReservasCanceladas)
-function mostrarReservasCanceladas() {
+//LISTA DE RESERVAS RECHAZADAS
+document.querySelector("#btnSeccionListaDeReservasRechazadas").addEventListener("click", mostrarReservasRechazadas)
+function mostrarReservasRechazadas() {
     ocultarBarraSegunTipoUsuario(sistema.usuarioLogueado.tipoUsuario)
     let idUsuarioReservante
     let tabla = ""
@@ -492,7 +492,7 @@ function mostrarReservasCanceladas() {
         idUsuarioReservante=sistema.reservas[i].idUsuario
         idDestino=sistema.reservas[i].idDestino
         
-        if (sistema.reservas[i].estadoReserva==="cancelada") {
+        if (sistema.reservas[i].estadoReserva==="rechazada") {
             tabla += `
             <tr>
               <td>${sistema.buscarUsuarioPorId(idUsuarioReservante).usuario}</td>
@@ -507,12 +507,12 @@ function mostrarReservasCanceladas() {
             
         }
     } 
-    document.querySelector("#tbListaDeReservasCanceladas").innerHTML = tabla
+    document.querySelector("#tbListaDeReservasRechazadas").innerHTML = tabla
 }
 
 //APROBAR RESERVA
-document.querySelector("#btnAprobarReserva").addEventListener("click",aprobarReserva)
-function aprobarReserva(){
+document.querySelector("#btnProcesarReserva").addEventListener("click",procesarReserva)
+function procesarReserva(){
     let dineroDisponibleUsuario=sistema.usuarioLogueado.saldo
     let millasDisponibleUsuario=sistema.usuarioLogueado.millas
     let precioPaquete=sistema.reservaEspecifica.dineroGastado+sistema.reservaEspecifica.millasGastadas
@@ -520,7 +520,7 @@ function aprobarReserva(){
     let idReserva=sistema.reservaEspecifica.idReserva
     let conMillas=""
     let mensaje=""
-    console.log("prueba1")
+
     if(sistema.reservaEspecifica.millas===0){
         conMillas="false"
     }else{
@@ -532,7 +532,6 @@ function aprobarReserva(){
                 usuarioLogueado.saldo = dineroDisponibleUsuario-precioPaquete
                 sistema.buscarObjetoReservaPorID(idReserva).estadoReserva="aprobada"
                 inicioSegunTipoUsuario()
-                console.log("prueba2")
             }else{
                 mensaje=`Saldo insuficiente`
             }
@@ -543,21 +542,16 @@ function aprobarReserva(){
                 usuarioLogueado.millas = millasDisponibleUsuario-sistema.reservaEspecifica.millasGastadas
                 usuarioLogueado.millas += sistema.reservaEspecifica.dineroGastado/100
                 sistema.buscarObjetoReservaPorID(idReserva).estadoReserva="aprobada"
+                console.log("millas generadas",sistema.reservaEspecifica.dineroGastado/100)
                 inicioSegunTipoUsuario()
-                console.log("prueba3")
             }else{
-                mensaje=`Saldo insuficiente`
+                sistema.buscarObjetoReservaPorID(idReserva).estadoReserva="rechazada"
             }
         break;
     }
-    document.querySelector("#pMensajeAprobarReserva").innerHTML=mensaje
+    document.querySelector("#pMensajeProcesarReserva").innerHTML=mensaje
 }
-document.querySelector("#btnVolverdDesdeAprobarReserva").addEventListener("click",inicioSegunTipoUsuario)
-    
-    
-
-//document.querySelector("#btnRechazarReserva").addEventListener("click",rechazarReserva)
-//document.querySelector("#btnVolverdDesdeRechazarReserva").addEventListener("click",volverdDesdeRechazarReserva)
+document.querySelector("#btnVolverdDesdeProcesarReserva").addEventListener("click",inicioSegunTipoUsuario)
 
 
 //Estadistica
