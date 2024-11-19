@@ -9,5 +9,4 @@ class Reservas{
         this.estadoReserva=estadoReserva
         this.descripcion=descripcion
     }
-
 }

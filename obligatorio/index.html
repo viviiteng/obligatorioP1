@@ -248,9 +248,6 @@
       
       
       <!-- 6 VER LISTADO DE RESERVAS Y CANCELAR -->
-      
-
-
       <section class="seccionCliente" id="seccionListadoDeReservas">
         <h2>LISTADO DE RESERVAS</h2>
 
@@ -313,6 +310,19 @@
         </table>      
       </section>
 
+      <section class="seccionAdmin" id="seccionAprobarReserva">     
+        <p>¿Desea aprobar la reserva selecionada?</p>
+        <input type="button" value="Aprobar" id="btnAprobarReserva">
+        <input type="button" value="Volver" id="btnVolverdDesdeAprobarReserva">
+        <p id="pMensajeAprobarReserva"></p>       
+      </section>
+
+      <section class="seccionAdmin" id="seccionRechazarReserva"> 
+        <p>¿Desea rechazar la reserva selecionada?</p>
+        <input type="button" value="Confirmar" id="btnRechazarReserva">
+        <input type="button" value="Volver" id="btnVolverdDesdeRechazarReserva">
+      </section>
+
       <section class="seccionAdmin" id="seccionListaDeReservasAprobadas">
         <h2>LISTADO DE RESERVAS APROBADAS</h2>
         <table>
@@ -325,7 +335,6 @@
               <th>Monto en Millas</th>
               <th>Estado de la reserva</th>
               <th>Descripcion</th>
-              <th>Edicion</th>
             </tr>
           </thead>
           <tbody id="tbListaDeReservasAprobadas">  
@@ -345,7 +354,6 @@
               <th>Monto en Millas</th>
               <th>Estado de la reserva</th>
               <th>Descripcion</th>
-              <th>Edicion</th>
             </tr>
           </thead>
           <tbody id="tbListaDeReservasCanceladas">  
@@ -357,7 +365,7 @@
       <!-- 9 Ver información estadística  -->
       <section class="seccionAdmin" id="seccionEstadistica">
         <h2>Informe de ganancias</h2>
-        <p id="totalGanancias">Total de ganancias: $$$$</p>
+        <p id="totalGanancias"></p>
         <table>
           <thead>
             <tr>

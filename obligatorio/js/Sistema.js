@@ -3,11 +3,12 @@ class Sistema {
         this.usuarios=[];
         this.reservas=[];
         this.destinos=[];
-        this.idUsuario=11
+        this.idUsuario=11;
         this.idDestino=11;  
-        this.idReserva=6
-        this.destinoEspecifico=null
-        this.usuarioLogueado=null
+        this.idReserva=6;
+        this.destinoEspecifico=null;
+        this.usuarioLogueado=null;
+        this.reservaEspecifica=null;
     }
 
     precargarDatos(){
@@ -45,8 +46,10 @@ class Sistema {
         const reserva1 = new Reservas(1,6,"DEST_ID_3",1,250,0,"pendiente","descripcion1");
         const reserva2 = new Reservas(2,7,"DEST_ID_4",1,0,200,"aprobada","descripcion2");
         const reserva3 = new Reservas(3,8,"DEST_ID_5",1,0,200,"cancelada","descripcion3");
-        this.reservas.push(reserva1,reserva2,reserva3)
-        
+        const reserva4 = new Reservas(4,9,"DEST_ID_6",2,0,0,"pendiente","descripcion4");
+        const reserva5 = new Reservas(5,10,"DEST_ID_7",2,0,0,"aprobada","descripcion5");
+
+        this.reservas.push(reserva1,reserva2,reserva3,reserva4,reserva5)
     }
     cargarUsuario(usuario, password, tipoUsuario, nombre, apellido, confirmaContraseña, numeroTarjeta,cvc){
         this.usuarios.push(new Usuario(this.idUsuario, usuario, password, tipoUsuario, nombre, apellido, confirmaContraseña, numeroTarjeta,cvc))
@@ -56,13 +59,12 @@ class Sistema {
         this.destinos.push(new Destinos (`DEST_ID_${this.idDestino}`,nombreDestino,precio,img,estado,cupos,descripcion,esOferta))
         this.idDestino++    
     }
-
     cargarReserva(idUsuario,idDestino,cantidadPersonas,dineroGastado,millasGastadas,estadoReserva,descripcion){
         this.reservas.push(new Reservas(this.idReserva, idUsuario,idDestino,cantidadPersonas,dineroGastado,millasGastadas,estadoReserva,descripcion))
         this.idReserva++
     }
 
-    // Funcion: busca el destino por medio del id
+    // Funcion: busca el destino por medio del id++
     // - Devuelve la posicion de ese destino
     // - Guarda en una variabla ese objeto
     buscarPosicionDestinoPorID(idDestino){
@@ -70,6 +72,7 @@ class Sistema {
         for (let i = 0; i < this.destinos.length; i++) {
             if (idDestino===this.destinos[i].id) {
                 this.destinoEspecifico = this.destinos[i]
+                console.log("prueba destino",this.destinos[i])
                 return i
             }
         }
@@ -96,4 +99,19 @@ class Sistema {
         }
     }
     
+    // Funcion: busca la reserva por medio del id
+    // - Devuelve el objeto de esa reseva
+    // - Guarda en una variabla ese objeto
+    buscarObjetoReservaPorID(idReservaParametro){
+        for (let i = 0; i < this.reservas.length; i++) {
+            if (idReservaParametro===this.reservas[i].idReserva) {
+                console.log("coinciden",idReservaParametro===this.reservas[i].idReserva)
+                this.reservaEspecifica = this.reservas[i]
+                return this.reservas[i]
+           
+            }
+        }
+    }
 }
+
+

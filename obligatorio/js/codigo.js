@@ -59,9 +59,9 @@ function mostrarSeccionSegunId() {
             ocultarSecciones()
             document.querySelector("#" + idSeccion).style.display = "block"
         }
-        console.log("idExtraidoHTML", idExtraidoHTML)
-        console.log("idSeccion", idSeccion)
-        console.log("coinciden", idExtraidoHTML === idSeccion)
+        //console.log("idExtraidoHTML", idExtraidoHTML)
+       // console.log("idSeccion", idSeccion)
+        //console.log("coinciden", idExtraidoHTML === idSeccion)
     }
 }
 
@@ -76,7 +76,9 @@ function mostrarSeccionSegunData() {
     let idSeccion = idBtn.charAt(3).toLowerCase() + idBtn.substring(4, idBtn.indexOf("-"))
     let secciones = document.getElementsByTagName("section")
 
+    
     sistema.buscarPosicionDestinoPorID(idBtn.substring(idBtn.indexOf("-") + 1))
+    sistema.buscarObjetoReservaPorID(Number(idBtn.substring(idBtn.indexOf("-") + 1)))
     for (let i = 0; i < secciones.length; i++) {
         let idExtraidoHTML = secciones[i].getAttribute("id")
 
@@ -84,9 +86,9 @@ function mostrarSeccionSegunData() {
             ocultarSecciones()
             document.querySelector("#" + idSeccion).style.display = "block"
         }
-        console.log("idExtraidoHTMLDATA", idExtraidoHTML)
-        console.log("idSeccionDATA", idSeccion)
-        console.log("coincidenDATA", idExtraidoHTML === idSeccion)
+        //console.log("idExtraidoHTMLDATA", idExtraidoHTML)
+        //console.log("idSeccionDATA", idSeccion)
+        //console.log("coincidenDATA", idExtraidoHTML === idSeccion)
     }
     console.log("************************")
     
@@ -95,6 +97,9 @@ function mostrarSeccionSegunData() {
 //CERRAR SESION
 let botonesNav = document.querySelectorAll(".botonNavBar")
     for (let i = 0; i < botonesNav.length; i++) {
+        sistema.usuarioLogueado=null
+        sistema.destinoEspecifico=null
+        sistema.reservaEspecifica=null
         botonesNav[i].addEventListener("click", mostrarSeccionSegunData)
 }
 
@@ -381,7 +386,7 @@ function realizarReserva(){
     let metodoPago = document.querySelector("#slcMetodoDePago").value
     let descripcion = document.querySelector("#txtDescripcionReserva").value
     let millasUsuario = sistema.usuarioLogueado.millas
-    let saldoUsuario = sistema.usuarioLogueado.saldo
+    
     let precioPaquete= sistema.destinoEspecifico.precio
     let dineroGastado= precioPaquete*cantidadPersonas
     let mensaje=""
@@ -389,20 +394,12 @@ function realizarReserva(){
         switch (metodoPago) {
             case "millas":
                 dineroGastado=precioPaquete*cantidadPersonas-millasUsuario
-                if(saldoUsuario>=dineroGastado){
-                    sistema.cargarReserva(sistema.usuarioLogueado.id,sistema.destinoEspecifico.id,cantidadPersonas,dineroGastado,millasUsuario,"pendiente",descripcion)
-                    inicioSegunTipoUsuario()
-                }else{
-                    mensaje=`Saldo insuficiente`
-                }
+                sistema.cargarReserva(sistema.usuarioLogueado.id,sistema.destinoEspecifico.id,cantidadPersonas,dineroGastado,millasUsuario,"pendiente",descripcion)
+                inicioSegunTipoUsuario()
             break;
             case "tarjeta":
-                if(saldoUsuario>=dineroGastado){
-                    sistema.cargarReserva(sistema.usuarioLogueado.id,sistema.destinoEspecifico.id,cantidadPersonas,dineroGastado,0,"pendiente",descripcion)
-                    inicioSegunTipoUsuario()
-                }else{
-                    mensaje=`Saldo insuficiente`
-                }    
+                sistema.cargarReserva(sistema.usuarioLogueado.id,sistema.destinoEspecifico.id,cantidadPersonas,dineroGastado,0,"pendiente",descripcion)
+                inicioSegunTipoUsuario()
             break;
             default:
                 mensaje=`Seleccione un metodo de pago`
@@ -438,9 +435,8 @@ function mostrarReservasPendientes() {
               <td>${sistema.reservas[i].estadoReserva}</td>
               <td>${sistema.reservas[i].descripcion}</td>
               <td>
-                <input type="button" value="Procesar Reserva" data-btn="btnSeccionConfirmarReserva-${sistema.reservas[i].id}"/>
-                <input type="button" value="Procesar Reserva" data-btn="btnSeccionConfirmarReserva-${sistema.reservas[i].id}"/>
-                <input type="button" value="Procesar Reserva" data-btn="btnSeccionConfirmarReserva-${sistema.reservas[i].id}"/>
+                <input type="button" value="Aprobar reserva" class="botonTabla" data-btn="btnSeccionAprobarReserva-${sistema.reservas[i].idReserva}"/>
+                <input type="button" value="Rechazar reserva" class="botonTabla" data-btn="btnSeccionRechazarReserva-${sistema.reservas[i].idReserva}"/>
               </td>
             </tr>
             `
@@ -454,6 +450,7 @@ function mostrarReservasPendientes() {
         botonesTabla[i].addEventListener("click", mostrarSeccionSegunData)
     }  
 }
+
 
 //LISTA DE RESERVAS APROBADAS
 document.querySelector("#btnSeccionReservasPendientes").addEventListener("click", mostrarReservasAprobadas)
@@ -476,22 +473,12 @@ function mostrarReservasAprobadas() {
               <td>${sistema.reservas[i].millasGastadas}</td>
               <td>${sistema.reservas[i].estadoReserva}</td>
               <td>${sistema.reservas[i].descripcion}</td>
-              <td>
-                <input type="button" value="Procesar Reserva" data-btn="btnSeccionConfirmarReserva-${sistema.reservas[i].id}"/>
-                <input type="button" value="Procesar Reserva" data-btn="btnSeccionConfirmarReserva-${sistema.reservas[i].id}"/>
-                <input type="button" value="Procesar Reserva" data-btn="btnSeccionConfirmarReserva-${sistema.reservas[i].id}"/>
-              </td>
             </tr>
             `
             
         }
     } 
-    document.querySelector("#tbListaDeReservasAprobadas").innerHTML = tabla
-
-    let botonesTabla = document.querySelectorAll(".botonTabla")
-    for (let i = 0; i < botonesTabla.length; i++) {
-        botonesTabla[i].addEventListener("click", mostrarSeccionSegunData)
-    }   
+    document.querySelector("#tbListaDeReservasAprobadas").innerHTML = tabla 
 }
 
 //LISTA DE RESERVAS CANCELADAS
@@ -515,20 +502,79 @@ function mostrarReservasCanceladas() {
               <td>${sistema.reservas[i].millasGastadas}</td>
               <td>${sistema.reservas[i].estadoReserva}</td>
               <td>${sistema.reservas[i].descripcion}</td>
-              <td>
-                <input type="button" value="Procesar Reserva" data-btn="btnSeccionConfirmarReserva-${sistema.reservas[i].id}"/>
-                <input type="button" value="Procesar Reserva" data-btn="btnSeccionConfirmarReserva-${sistema.reservas[i].id}"/>
-                <input type="button" value="Procesar Reserva" data-btn="btnSeccionConfirmarReserva-${sistema.reservas[i].id}"/>
-              </td>
             </tr>
             `
             
         }
     } 
     document.querySelector("#tbListaDeReservasCanceladas").innerHTML = tabla
+}
 
-    let botonesTabla = document.querySelectorAll(".botonTabla")
-    for (let i = 0; i < botonesTabla.length; i++) {
-        botonesTabla[i].addEventListener("click", mostrarSeccionSegunData)
-    }   
+//APROBAR RESERVA
+document.querySelector("#btnAprobarReserva").addEventListener("click",aprobarReserva)
+function aprobarReserva(){
+    let dineroDisponibleUsuario=sistema.usuarioLogueado.saldo
+    let millasDisponibleUsuario=sistema.usuarioLogueado.millas
+    let precioPaquete=sistema.reservaEspecifica.dineroGastado+sistema.reservaEspecifica.millasGastadas
+    let usuarioLogueado=sistema.buscarUsuarioPorId(sistema.usuarioLogueado.id)
+    let idReserva=sistema.reservaEspecifica.idReserva
+    let conMillas=""
+    let mensaje=""
+    console.log("prueba1")
+    if(sistema.reservaEspecifica.millas===0){
+        conMillas="false"
+    }else{
+        conMillas="true"
+    }
+    switch(conMillas){
+        case "false":
+            if(dineroDisponibleUsuario>=precioPaquete){
+                usuarioLogueado.saldo = dineroDisponibleUsuario-precioPaquete
+                sistema.buscarObjetoReservaPorID(idReserva).estadoReserva="aprobada"
+                inicioSegunTipoUsuario()
+                console.log("prueba2")
+            }else{
+                mensaje=`Saldo insuficiente`
+            }
+        break;
+        case "true":
+            if(dineroDisponibleUsuario>=precioPaquete){
+                usuarioLogueado.saldo = dineroDisponibleUsuario-sistema.reservaEspecifica.dineroGastado
+                usuarioLogueado.millas = millasDisponibleUsuario-sistema.reservaEspecifica.millasGastadas
+                usuarioLogueado.millas += sistema.reservaEspecifica.dineroGastado/100
+                sistema.buscarObjetoReservaPorID(idReserva).estadoReserva="aprobada"
+                inicioSegunTipoUsuario()
+                console.log("prueba3")
+            }else{
+                mensaje=`Saldo insuficiente`
+            }
+        break;
+    }
+    document.querySelector("#pMensajeAprobarReserva").innerHTML=mensaje
+}
+document.querySelector("#btnVolverdDesdeAprobarReserva").addEventListener("click",inicioSegunTipoUsuario)
+    
+    
+
+//document.querySelector("#btnRechazarReserva").addEventListener("click",rechazarReserva)
+//document.querySelector("#btnVolverdDesdeRechazarReserva").addEventListener("click",volverdDesdeRechazarReserva)
+
+
+//Estadistica
+let totalGanancia=0
+document.querySelector("#seccionEstadistica").addEventListener("click", mostrarEstadistica)
+
+
+function mostrarEstadistica() {
+    document.querySelector("#totalGanancias").innerHTML=`Total de ganancias: $ ${calcularTotalDeGanancia()}`
+}
+console.log(totalGanancia)
+
+function calcularTotalDeGanancia() {
+    
+    for (let i = 0; i < sistema.reservas.length; i++) {
+        if (sistema.reservas[i].estadoReserva==="aprobada") {
+            totalGanancia+= sistema.reservas[i].dineroGastado  
+        }
+    }
 }
