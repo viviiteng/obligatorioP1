@@ -44,10 +44,10 @@ class Sistema {
         this.destinos.push(destino1,destino2,destino3,destino4,destino5,destino6,destino7,destino8,destino9,destino10)
 
         const reserva1 = new Reservas(1,6,"DEST_ID_3",1,250,0,"pendiente","descripcion1");
-        const reserva2 = new Reservas(2,7,"DEST_ID_4",1,0,200,"aprobada","descripcion2");
-        const reserva3 = new Reservas(3,8,"DEST_ID_5",1,0,200,"cancelada","descripcion3");
-        const reserva4 = new Reservas(4,9,"DEST_ID_6",2,0,0,"pendiente","descripcion4");
-        const reserva5 = new Reservas(5,10,"DEST_ID_7",2,0,0,"aprobada","descripcion5");
+        const reserva2 = new Reservas(2,7,"DEST_ID_4",1,200,200,"aprobada","descripcion2");
+        const reserva3 = new Reservas(3,8,"DEST_ID_8",10,30000,200,"cancelada","descripcion3");
+        const reserva4 = new Reservas(4,9,"DEST_ID_6",2,5000,0,"pendiente","descripcion4");
+        const reserva5 = new Reservas(5,10,"DEST_ID_7",2,4200,0,"aprobada","descripcion5");
 
         this.reservas.push(reserva1,reserva2,reserva3,reserva4,reserva5)
     }

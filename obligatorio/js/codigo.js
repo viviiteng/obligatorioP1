@@ -561,20 +561,37 @@ document.querySelector("#btnVolverdDesdeAprobarReserva").addEventListener("click
 
 
 //Estadistica
-let totalGanancia=0
+
 document.querySelector("#seccionEstadistica").addEventListener("click", mostrarEstadistica)
 
-
 function mostrarEstadistica() {
-    document.querySelector("#totalGanancias").innerHTML=`Total de ganancias: $ ${calcularTotalDeGanancia()}`
-}
-console.log(totalGanancia)
+    let totalGanancia = 0 
 
-function calcularTotalDeGanancia() {
-    
-    for (let i = 0; i < sistema.reservas.length; i++) {
-        if (sistema.reservas[i].estadoReserva==="aprobada") {
-            totalGanancia+= sistema.reservas[i].dineroGastado  
+    for (let i = 0; i < sistema.destinos.length; i++) {
+        const destino = sistema.destinos[i] 
+        let personasReservadas = 0
+        let gananciasDestino = 0
+
+        for (let j = 0; j < sistema.reservas.length; j++) {
+            const reserva = sistema.reservas[j] 
+            if (reserva.idDestino === destino.id && reserva.estadoReserva === "aprobada") {
+                personasReservadas += reserva.cantidadPersonas
+                gananciasDestino += reserva.dineroGastado
+            }
         }
+
+        if (personasReservadas > 0) {
+            fila += `
+                <tr>
+                    <td>${destino.nombreDestino}</td>
+                    <td>${personasReservadas} personas</td>
+                    <td>$${gananciasDestino}</td>
+                </tr>
+            `
+        }
+
+        totalGanancia += gananciasDestino
     }
+    document.querySelector("#tblEstadistica").innerHTML = fila
+    document.querySelector("#totalGanancias").textContent = `Total de ganancias: $${totalGanancia}`
 }
