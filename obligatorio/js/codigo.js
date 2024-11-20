@@ -671,26 +671,62 @@ function mostrarlistaDeReservasEnEspera() {
     deshabilitarBoton()
 }
 
-function deshabilitarBoton(){
-    let botones=[]
-    let botonesCancelar=document.querySelectorAll(".botonTablaReservasEnEspera")
+// function deshabilitarBoton(){
+//     let botones=[]
+//     let botonesCancelar=document.querySelectorAll(".botonTablaReservasEnEspera")
 
-    for (let i = 0; i < sistema.reservas.length; i++) {
-        if(sistema.reservas[i].idUsuario===sistema.usuarioLogueado.id){  
-            botones.push(`btnSeccionConfirmarCancelarReserva-${sistema.reservas[i].idReserva}`)
+//     for (let i = 0; i < sistema.reservas.length; i++) {
+//         if(sistema.reservas[i].idUsuario===sistema.usuarioLogueado.id){  
+//             botones.push(`btnSeccionConfirmarCancelarReserva-${sistema.reservas[i].idReserva}`)
+//         }
+//     }
+//     console.log("botones",botones)
+
+//     for(let i = 0; i<botones.length; i++){
+        
+//         for (let j = 0; j < botonesCancelar.length; j++){
+//             if(botonesCancelar[j].getAttribute("data-btn")===botones[i] && ((sistema.reservas[i].estadoReserva==="aprobada")|| (sistema.reservas[i].estadoReserva==="rechazada"))){ 
+
+//                 document.querySelector("#"+botones[j] ).setAttribute("disabled", "true")
+//             }
+
+//         }
+//     }        
+            
+// }
+
+//ESTO LO HIZO CHAT GPT. HAY QUE VER PPPOR QUE LE FUNCIONA A EL Y NO A NOSOTTOS. LO BUSQUE RAPIDO A ULTIMA HORA.
+
+function deshabilitarBoton() {
+    // Obtener todos los botones de la tabla
+    const botonesCancelar = document.querySelectorAll(".botonTablaReservasEnEspera");
+
+    // Recorrer los botones
+    for (let j = 0; j < botonesCancelar.length; j++) {
+        const boton = botonesCancelar[j];
+        
+        // Extraer el ID de la reserva del atributo `id` del botón
+        let idReserva = "";
+        const idBoton = boton.id;
+        for (let k = 0; k < idBoton.length; k++) {
+            if (idBoton[k] >= '0' && idBoton[k] <= '9') {
+                idReserva += idBoton[k];
+            }
+        }
+        idReserva = parseInt(idReserva);
+
+        // Buscar la reserva manualmente en el array `reservas`
+        let reserva = null;
+        for (let i = 0; i < sistema.reservas.length; i++) {
+            if (sistema.reservas[i].idReserva === idReserva) {
+                reserva = sistema.reservas[i];
+                break;
+            }
+        }
+
+        // Si la reserva está aprobada o rechazada, deshabilitar el botón
+        if (reserva && (reserva.estadoReserva === "aprobada" || reserva.estadoReserva === "rechazada")) {
+            boton.setAttribute("disabled", "true");
         }
     }
-    console.log("botones",botones)
-
-    for(let i = 0; i<botones.length; i++){
-        
-        for (let j = 0; j < botonesCancelar.length; j++){
-            if(botonesCancelar[j].getAttribute("data-btn")===botones[i] && ((sistema.reservas[i].estadoReserva==="aprobada")|| (sistema.reservas[i].estadoReserva==="rechazada"))){ 
-
-                document.querySelector("#"+botones[j] ).setAttribute("disabled", "true")
-            }
-
-        }
-    }        
-            
 }

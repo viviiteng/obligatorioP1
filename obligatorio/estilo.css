@@ -6,6 +6,7 @@ body {
   font-family: "Roboto Flex", sans-serif;
   background-color: #fafafa;
   margin: 0;
+  height: 100%;
 }
 
 /* Estilos contenedor de todo el documento */
@@ -13,11 +14,13 @@ body {
   width: 100%;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
 }
 
 /* Estilos contenedor de todo el contenido  */
 main {
   padding: 20px;
+  flex: 1;
 }
 
 /* Titulos */
