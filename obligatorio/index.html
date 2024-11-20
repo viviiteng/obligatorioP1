@@ -38,9 +38,6 @@
           <li>
             <a class="botonNavBar" data-btn="btnSeccionAdministrarDestinos-"> Explorar Destinos</a>
           <li>
-            <a class="boton" id="">Ofertas</a>
-          </li>
-          <li>
             <a class="botonNavBar" data-btn="btnSeccionCerrarSesion-">Cerrar sesion</a>
           </li>
         </ul>
@@ -255,33 +252,26 @@
           <thead>
             <tr>
               <th>Destino</th>
-              <th>Monto total</th>
+              <th>Monto total(US$)</th>
+              <th>Monto total(Millas)</th>
               <th>Cantidad de personas</th>
               <th>Estado de la reserva</th>
               <th>Edicion</th>
             </tr>
           </thead>
-          <tr>
-            <td>Destino 1</td>
-            <td>$$$</td>
-            <td>***</td>
-            <td>ACTIVA</td>
-            <td>
-              <input type="button" value="Cancelar Reserva"/>
-            </td>
-          </tr>
-          <tr>
-            <td>Destino 2</td>
-            <td>$$$</td>
-            <td>***</td>
-            <td>PENDIENTE</td>
-            
-            <td>
-              <input type="button" value="Cancelar Reserva" />
-            </td>
-          </tr>
+          <tbody id="tbListadoReservasCliente">
+            <tr>           
+            </tr>
+          </tbody>
         </table>
       </section>
+      
+      <section class="seccionCliente" id="seccionConfirmarCancelarReserva">
+        <p>¿Desea cancelar la reserva selecionada?</p>
+        <input type="button" value="Confirmar" class="boton" id="btnConfirmarCancelarReserva">
+        <input type="button" value="Volver" class="boton" id="btnVolverDesdeConfirmarCancelarReserva">
+      </section>
+
 
       <!-- 7 CANCELAR O APROBAR RESERVAS -->
       <section class="seccionAdmin" id="seccionAdministrarReservas">
