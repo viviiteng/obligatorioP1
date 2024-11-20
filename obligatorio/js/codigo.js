@@ -669,6 +669,11 @@ function mostrarlistaDeReservasEnEspera() {
     } 
     document.querySelector("#tbListadoReservasCliente").innerHTML = tabla
     deshabilitarBoton()
+
+    let botonesDeCancelar = document.querySelectorAll(".botonTablaReservasEnEspera")
+    for (let i = 0; i < botonesDeCancelar.length; i++) {
+        botonesDeCancelar[i].addEventListener("click", mostrarSeccionSegunData)
+    }
 }
 
 // function deshabilitarBoton(){
@@ -695,38 +700,38 @@ function mostrarlistaDeReservasEnEspera() {
             
 // }
 
-//ESTO LO HIZO CHAT GPT. HAY QUE VER PPPOR QUE LE FUNCIONA A EL Y NO A NOSOTTOS. LO BUSQUE RAPIDO A ULTIMA HORA.
 
 function deshabilitarBoton() {
-    // Obtener todos los botones de la tabla
-    const botonesCancelar = document.querySelectorAll(".botonTablaReservasEnEspera");
+    let botonesCancelar = document.querySelectorAll(".botonTablaReservasEnEspera");
 
-    // Recorrer los botones
     for (let j = 0; j < botonesCancelar.length; j++) {
-        const boton = botonesCancelar[j];
-        
-        // Extraer el ID de la reserva del atributo `id` del botón
-        let idReserva = "";
-        const idBoton = boton.id;
+        let boton = botonesCancelar[j]
+        let idReserva = ""
+        let idBoton = boton.getAttribute("id")
+        console.log("idBoton",idBoton)
         for (let k = 0; k < idBoton.length; k++) {
-            if (idBoton[k] >= '0' && idBoton[k] <= '9') {
-                idReserva += idBoton[k];
+            if (idBoton[k] >= "0" && idBoton[k] <= "9") {
+                idReserva += idBoton[k]
             }
         }
-        idReserva = parseInt(idReserva);
-
-        // Buscar la reserva manualmente en el array `reservas`
-        let reserva = null;
-        for (let i = 0; i < sistema.reservas.length; i++) {
-            if (sistema.reservas[i].idReserva === idReserva) {
-                reserva = sistema.reservas[i];
-                break;
-            }
-        }
-
-        // Si la reserva está aprobada o rechazada, deshabilitar el botón
-        if (reserva && (reserva.estadoReserva === "aprobada" || reserva.estadoReserva === "rechazada")) {
-            boton.setAttribute("disabled", "true");
+        idReserva = Number(idReserva)
+        console.log("idReserva",idReserva)
+        
+        if ((sistema.buscarObjetoReservaPorID(idReserva).estadoReserva === "aprobada" || sistema.buscarObjetoReservaPorID(idReserva).estadoReserva === "rechazada")) {
+            boton.setAttribute("disabled", "true")
         }
     }
+}
+
+//CANCELAR RESERVA-CLIENTE
+
+// document.querySelector("#regSeccionListadoDeReservas").addEventListener("click", mostrar)
+
+document.querySelector("#btnConfirmarCancelarReserva").addEventListener("click", borrarReserva)
+
+function borrarReserva(){
+    let posicionReserva = sistema.buscarObjetoReservaPorID(sistema.reservaEspecifica.idReserva).idReserva-1
+    sistema.reservas.splice(posicionReserva,1)
+    console.log("sistema.reservas",sistema.reservas)
+    inicioSegunTipoUsuario()
 }
