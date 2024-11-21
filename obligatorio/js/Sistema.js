@@ -115,6 +115,15 @@ class Sistema {
             }
         }
     }
+    //PAUSAR DESTINO POR FALTA DE CUPOS
+    pausarDestinosPorCuposAgotados(){
+    for (let i = 0; i < sistema.destinos.length; i++) {
+        if(sistema.destinos[i].cuposDisponibles===0){
+            sistema.destinos[i].estado="pausado"
+        }
+    }
 }
+}
+
 
 

@@ -186,6 +186,7 @@ function validarInicioDeSesion() {
 function inicioSegunTipoUsuario() {
     let tipoUsuario = sistema.usuarioLogueado.tipoUsuario
     ocultarSecciones()
+    sistema.pausarDestinosPorCuposAgotados()
     document.querySelector("#seccionAdministrarDestinos").style.display = "block"
     ocultarBarraSegunTipoUsuario(tipoUsuario)
 
@@ -311,9 +312,6 @@ function editarDestino() {
     } else {
         document.querySelector("#pErrorEditarDestinos").innerHTML = "Es obligatorio ingresar el nombre del destino y las secciones numericas no pueden ser menor a 0"
     }
-
-    console.log("destinoespecifico", sistema.destinoEspecifico)
-    console.log("arrayDestino")
 }
 
 
@@ -333,12 +331,17 @@ document.querySelector("#btnConfimarEstado").addEventListener("click", cambiarEs
 
 function cambiarEstadoDestino() {
     posicionDestino = sistema.buscarPosicionDestinoPorID(sistema.destinoEspecifico.id)
-    if (sistema.destinoEspecifico.estado === "activo") {
-        sistema.destinos[posicionDestino].estado = "pausado"
-    } else {
-        sistema.destinos[posicionDestino].estado = "activo"
+    if(sistema.destinos[posicionDestino].cuposDisponibles>0){
+        if (sistema.destinoEspecifico.estado === "activo") {
+            sistema.destinos[posicionDestino].estado = "pausado"
+        } else {
+            sistema.destinos[posicionDestino].estado = "activo"
+        }
+        inicioSegunTipoUsuario()
+    }else{
+        alert("Cupos agotados")
+        inicioSegunTipoUsuario()
     }
-    inicioSegunTipoUsuario()
 }
 document.querySelector("#btnVolverDesdeConfirmarEstado").addEventListener("click", inicioSegunTipoUsuario)
 
@@ -417,6 +420,7 @@ function realizarReserva() {
 //LISTA DE RESERVAS PENDIENTES
 document.querySelector("#btnSeccionReservasPendientes").addEventListener("click", mostrarReservasPendientes)
 function mostrarReservasPendientes() {
+    
     ocultarBarraSegunTipoUsuario(sistema.usuarioLogueado.tipoUsuario)
     let idUsuarioReservante
     let tabla = ""
@@ -675,32 +679,6 @@ function mostrarlistaDeReservasEnEspera() {
         botonesDeCancelar[i].addEventListener("click", mostrarSeccionSegunData)
     }
 }
-
-// function deshabilitarBoton(){
-//     let botones=[]
-//     let botonesCancelar=document.querySelectorAll(".botonTablaReservasEnEspera")
-
-//     for (let i = 0; i < sistema.reservas.length; i++) {
-//         if(sistema.reservas[i].idUsuario===sistema.usuarioLogueado.id){  
-//             botones.push(`btnSeccionConfirmarCancelarReserva-${sistema.reservas[i].idReserva}`)
-//         }
-//     }
-//     console.log("botones",botones)
-
-//     for(let i = 0; i<botones.length; i++){
-        
-//         for (let j = 0; j < botonesCancelar.length; j++){
-//             if(botonesCancelar[j].getAttribute("data-btn")===botones[i] && ((sistema.reservas[i].estadoReserva==="aprobada")|| (sistema.reservas[i].estadoReserva==="rechazada"))){ 
-
-//                 document.querySelector("#"+botones[j] ).setAttribute("disabled", "true")
-//             }
-
-//         }
-//     }        
-            
-// }
-
-
 function deshabilitarBoton() {
     let botonesCancelar = document.querySelectorAll(".botonTablaReservasEnEspera");
 
@@ -725,8 +703,6 @@ function deshabilitarBoton() {
 
 //CANCELAR RESERVA-CLIENTE
 
-// document.querySelector("#regSeccionListadoDeReservas").addEventListener("click", mostrar)
-
 document.querySelector("#btnConfirmarCancelarReserva").addEventListener("click", borrarReserva)
 
 function borrarReserva(){
@@ -734,4 +710,12 @@ function borrarReserva(){
     sistema.reservas.splice(posicionReserva,1)
     console.log("sistema.reservas",sistema.reservas)
     inicioSegunTipoUsuario()
+}
+
+//CONSULTAR SALDO
+document.querySelector("#btnSeccionConsultarSaldo").addEventListener("click", consultarSaldo)
+
+function consultarSaldo(){
+    document.querySelector("#pSaldoDinero").innerHTML=`US$: ${sistema.usuarioLogueado.saldo}`
+    document.querySelector("#pSaldoMillas").innerHTML=`Millas: ${sistema.usuarioLogueado.millas}`
 }
