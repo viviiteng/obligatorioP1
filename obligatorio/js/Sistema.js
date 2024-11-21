@@ -5,7 +5,7 @@ class Sistema {
         this.destinos=[];
         this.idUsuario=11;
         this.idDestino=11;  
-        this.idReserva=9;
+        this.idReserva=6;
         this.destinoEspecifico=null;
         this.usuarioLogueado=null;
         this.reservaEspecifica=null;
@@ -45,14 +45,11 @@ class Sistema {
 
         const reserva1 = new Reservas(1,6,"DEST_ID_3",1,250,0,"aprobada","descripcion1");
         const reserva2 = new Reservas(2,7,"DEST_ID_4",1,200,200,"aprobada","descripcion2");
-        const reserva3 = new Reservas(3,8,"DEST_ID_8",10,30000,200,"rechazada","descripcion3");
+        const reserva3 = new Reservas(3,8,"DEST_ID_8",11,33000,200,"rechazada","descripcion3");
         const reserva4 = new Reservas(4,9,"DEST_ID_6",2,4000,1000,"pendiente","descripcion4");
-        const reserva5 = new Reservas(5,10,"DEST_ID_7",2,4200,0,"aprobada","descripcion5");
-        const reserva6 = new Reservas(6,6,"DEST_ID_5",1,250,0,"aprobada","descripcion1");
-        const reserva7 = new Reservas(7,6,"DEST_ID_6",1,250,0,"aprobada","descripcion1");
-        const reserva8 = new Reservas(8,6,"DEST_ID_7",1,250,0,"pendiente","descripcion1");
+        const reserva5= new Reservas(8,6,"DEST_ID_7",1,2100,0,"pendiente","descripcion1");
 
-        this.reservas.push(reserva1,reserva2,reserva3,reserva4,reserva5,reserva6,reserva7,reserva8)
+        this.reservas.push(reserva1,reserva2,reserva3,reserva4,reserva5)
     }
     cargarUsuario(usuario, password, tipoUsuario, nombre, apellido, confirmaContraseña, numeroTarjeta,cvc){
         this.usuarios.push(new Usuario(this.idUsuario, usuario, password, tipoUsuario, nombre, apellido, confirmaContraseña, numeroTarjeta,cvc))

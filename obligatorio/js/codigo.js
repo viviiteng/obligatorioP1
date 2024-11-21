@@ -394,7 +394,7 @@ function realizarReserva() {
     let precioPaquete = sistema.destinoEspecifico.precio
     let dineroGastado = precioPaquete * cantidadPersonas
     let mensaje = ""
-    if (cantidadPersonas > 0 && descripcion !== "") {
+    if (cantidadPersonas > 0) {
         switch (metodoPago) {
             case "millas":
                 dineroGastado = precioPaquete * cantidadPersonas - millasUsuario
